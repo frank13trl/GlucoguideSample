@@ -14,7 +14,7 @@
                 </thead>
                 <tbody>";
         }
-        $dsettings = mysqli_query($patienthandle, "Select * from doctor_settings;");
+        $dsettings = mysqli_query($patienthandle, "Select * from doctor_settings where doctor_id='".$_SESSION['userid']."';");
         if (mysqli_num_rows($dsettings) == 0) {
             echo "<tr><td colspan = 5 align=center>No settings</td></tr>";
         } else {
