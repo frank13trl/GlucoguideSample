@@ -1,6 +1,6 @@
 <?php
         echo "<h1 class=\"p-5\">Your Current Settings</h1>";
-        $patienthandle = mysqli_connect("localhost", "root", "", "glucoguide");
+        include ('config.php');
         if (mysqli_connect_error()) {
             echo "<span class='text-danger'>Unable to connect to database!</span>";
         } else {
@@ -14,7 +14,7 @@
                 </thead>
                 <tbody>";
         }
-        $dsettings = mysqli_query($patienthandle, "Select * from doctor_settings where doctor_id='".$_SESSION['userid']."';");
+        $dsettings = mysqli_query($handle, "Select * from doctor_settings where doctor_id='".$_SESSION['userid']."';");
         if (mysqli_num_rows($dsettings) == 0) {
             echo "<tr><td colspan = 5 align=center>No settings</td></tr>";
         } else {
@@ -40,8 +40,8 @@
                 if (empty($_POST['dtcount'])) $_POST['dtcount'] = $ccount;
                 if (empty($_POST['dlval'])) $_POST['dlval'] = $clval;
                 if (empty($_POST['dhval'])) $_POST['dhval'] = $chval;
-                $psetchange = mysqli_connect("localhost", "root", "", "glucoguide");
-                $change = mysqli_query($psetchange, "Update doctor_settings set 
+                include ('config.php');
+                $change = mysqli_query($handle, "Update doctor_settings set 
                                                         default_testcount='" . $_POST['dtcount'] . "',
                                                         lower_normal='" . $_POST['dlval'] . "',
                                                         upper_normal='" . $_POST['dhval'] . "' where doctor_id='".$_SESSION['userid']."';");

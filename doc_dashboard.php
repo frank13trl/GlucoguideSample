@@ -127,9 +127,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <!-- Dashboard info here-->
     <?php
-    echo "<h1 class=\"p-5\"> Hello,".$_SESSION['user']."</h1>";
+    echo "<h1 class=\"p-5\"> Hello, Dr.".$_SESSION['user']."</h1>";
     echo "<h3 class=\"p-3\">Your Patients</h3>";
-    $handle= mysqli_connect("localhost", "root", "", "glucoguide");
+    include ('config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {

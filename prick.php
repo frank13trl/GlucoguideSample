@@ -2,7 +2,7 @@
 session_start();
 if (isset($_POST['prick'])){
 	$msg="";
-	$conn = mysqli_connect('localhost','root','','glucoguide');
+	include ('config.php');
 	$pid=$_SESSION['userid'];
 	$avg=$_SESSION['avg'];
 	$readings_string=$_SESSION['read'];
@@ -10,18 +10,18 @@ if (isset($_POST['prick'])){
 			echo $prickvalue;
 			$sql = "INSERT INTO patient_reading (patient_id,readings,reading_avg,pricked,action_taken)
 		VALUES ('$pid','$readings_string','$avg','$prickvalue',DEFAULT)";
-		if ($conn->query($sql) === TRUE) {
-				$msg = "Your readings are updated successfully";
+		if ($handle->query($sql) === TRUE) {
+				$msg = "<br/><span class='push text-success'>Your readings are updated successfully</span>";
 				$_SESSION["msg"]=$msg;
 		} 			
 		else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
+		echo "Error: " . $sql . "<br>" . $handle->error;
 		}
 		if(!empty($msg))
 		{
 			header("Location:pat_dashboard.php");
 		}
-		$conn -> close();	
+		$handle -> close();	
 	 }
 	 
 	 ?>

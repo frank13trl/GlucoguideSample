@@ -126,7 +126,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <?php
     echo "<h1 class=\"p-5\">Your Previous Readings</h1>";
     $pid = $_SESSION['userid'];
-    $handle = mysqli_connect("localhost", "root", "", "glucoguide");
+    include ('config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {

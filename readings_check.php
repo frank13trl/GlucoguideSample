@@ -37,19 +37,19 @@ if(count($_POST))
 		
 	}
 	else {
-		echo "<h4 class='push'>Your readings are normal<h4><br/>";
+		echo "<h4 class='push'>Your readings are normal</h4><br/>";
 		$prick=0;
-	$conn = new mysqli('localhost','root','','glucoguide');
+		include ('config.php');
 		$sql = "INSERT INTO patient_reading (patient_id,readings,reading_avg,pricked,action_taken)
 		VALUES ('$pid','$readings_string','$avg','$prick',DEFAULT)";
 
-			if ($conn->query($sql) === TRUE) {
+			if ($handle->query($sql) === TRUE) {
 				echo "<span class='push text-success'>Your readings are updated successfully</span>";
 		} 			
 		else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
+		echo "Error: " . $sql . "<br>" . $handle->error;
 		}
-		$conn -> close();
+		$handle -> close();
 }
 }
 

@@ -130,7 +130,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     $_SESSION['patient']=$_GET['patient'];
     $_SESSION['name']=$_GET['name'];
     echo "<h1 class=\"p-5\">";echo $_GET['name']; echo"'s Report</h1>";
-    $patienthandle = mysqli_connect("localhost", "root", "", "glucoguide");
+    include ('config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
@@ -145,7 +145,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </thead>
                 <tbody>";
       $count = 1;
-      $list = mysqli_query($patienthandle, "Select * from patient_reading where patient_id='".$_GET['patient']."';");
+      $list = mysqli_query($handle, "Select * from patient_reading where patient_id='".$_GET['patient']."';");
       if (mysqli_num_rows($list) == 0) {
         echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
       } else {

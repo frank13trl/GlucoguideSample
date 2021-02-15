@@ -1,14 +1,14 @@
 <?php
 
-$conn = new mysqli('localhost', 'root', '', 'glucoguide');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+include ('config.php');
+if ($handle->connect_error) {
+    die("Connection failed: " . $handle->connect_error);
 }
 $pid = $_SESSION['userid'];
 
 
 $sql = "select * from casefile where patient_id = '$pid'";
-$result = mysqli_query($conn, $sql);
+$result = mysqli_query($handle, $sql);
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $count = mysqli_num_rows($result);
 
@@ -87,7 +87,7 @@ if ($count == 1) {
 
     </form>
     <?php
-    include('readings_check.php');
+    include ('readings_check.php');
 
 
     ?>

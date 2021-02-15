@@ -57,7 +57,7 @@
 </head>
 
 <body class="bg-default">
-  <?php require('validate.php'); ?>
+  <?php require ('validate.php'); ?>
   <div class="main-content">
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
@@ -227,7 +227,7 @@
                     <select class="form-control" name="docid">
                       <option disabled selected>Select your doctor</option>
                       <?php
-                      require('doc_option.php');
+                      require ('doc_option.php');
                       ?>
                     </select>
                   </div>

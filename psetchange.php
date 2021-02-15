@@ -11,7 +11,7 @@ echo "<table class=\"table align-items-center table-flush\">
                   </tr>
                 </thead>
                 <tbody>";
-$settings = mysqli_query($patienthandle, "Select * from casefile where patient_id='" . $_GET['patient'] . "';");
+$settings = mysqli_query($handle, "Select * from casefile where patient_id='" . $_GET['patient'] . "';");
 if (mysqli_num_rows($settings) == 0) {
     echo "<tr><td colspan = 5 align=center>No settings</td></tr>";
 } else {
@@ -37,8 +37,8 @@ if (isset($_POST['change']) && $_POST['change'] == "Update") {
         if (empty($_POST['tcount'])) $_POST['tcount'] = $ccount;
         if (empty($_POST['lval'])) $_POST['lval'] = $clval;
         if (empty($_POST['hval'])) $_POST['hval'] = $chval;
-        $psetchange = mysqli_connect("localhost", "root", "", "glucoguide");
-        $change = mysqli_query($psetchange, "Update casefile set 
+        include ('config.php');
+        $change = mysqli_query($handle, "Update casefile set 
                                                     default_testcount='" . $_POST['tcount'] . "',
                                                     lower_normal='" . $_POST['lval'] . "',
                                                     upper_normal='" . $_POST['hval'] . "' where patient_id='" . $_GET['patient'] . "';");

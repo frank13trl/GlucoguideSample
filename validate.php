@@ -6,7 +6,7 @@ if (isset($_POST['reg_user'])) {
 
 
 
-  $reghandle = mysqli_connect("localhost", "root", "", "glucoguide");
+  include ('config.php');
   if (empty($_POST["username"])) {
     $nameErr = "Name is required";
   } else {
@@ -17,7 +17,7 @@ if (isset($_POST['reg_user'])) {
   } else {
     $userid = $_POST["userid"];
     $user_check_query = "SELECT * FROM login WHERE userid='$userid'";
-    $result = mysqli_query($reghandle, $user_check_query);
+    $result = mysqli_query($handle, $user_check_query);
     $user = mysqli_fetch_assoc($result);
 
     if ($user) {
@@ -79,10 +79,10 @@ if (isset($_POST['reg_user'])) {
   }
 
   if (empty($nameErr) && empty($useridErr) && empty($emailErr) && empty($passErr) && empty($emailErr) && empty($phoneErr) && empty($cityErr) && empty($categoryErr) && empty($selectErr)) {
-    $logquery = mysqli_query($reghandle, "Insert into login values(DEFAULT,'" . $username . "','" . $userid . "','" . $password . "','" . $category . "',DEFAULT);");
+    $logquery = mysqli_query($handle, "Insert into login values(DEFAULT,'" . $username . "','" . $userid . "','" . $password . "','" . $category . "',DEFAULT);");
     if ($category == "Doctor") {
-      $dinfquery = mysqli_query($reghandle, "Insert into doctor_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $hospital . "','" . $city . "','" . $desc . "');");
-      $dsetquery = mysqli_query($reghandle, "Insert into doctor_settings values('" . $userid . "',DEFAULT,DEFAULT,DEFAULT);");
+      $dinfquery = mysqli_query($handle, "Insert into doctor_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $hospital . "','" . $city . "','" . $desc . "');");
+      $dsetquery = mysqli_query($handle, "Insert into doctor_settings values('" . $userid . "',DEFAULT,DEFAULT,DEFAULT);");
       if ($logquery && $dinfquery && $dsetquery) {
         $message1 = "Account added successfully<br/>Redirecting to login page";
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
@@ -91,8 +91,8 @@ if (isset($_POST['reg_user'])) {
       }
     }
     if ($category == "Patient") {
-      $pinfquery = mysqli_query($reghandle, "Insert into patient_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $city . "');");
-      $psetquery = mysqli_query($reghandle, "Insert into casefile (patient_id,doctor_id,default_testcount,lower_normal,upper_normal) 
+      $pinfquery = mysqli_query($handle, "Insert into patient_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $city . "');");
+      $psetquery = mysqli_query($handle, "Insert into casefile (patient_id,doctor_id,default_testcount,lower_normal,upper_normal) 
                                                                 Select '" . $userid . "',doctor_settings.* from doctor_settings where doctor_id='" . $docid . "';");
       if ($logquery && $pinfquery && $psetquery) {
         $message1 = "Account added successfully<br/>Redirecting to login page";
@@ -103,11 +103,11 @@ if (isset($_POST['reg_user'])) {
       }
     }
   }
-  mysqli_close($reghandle);
+  mysqli_close($handle);
 }
 
 if (isset($_POST['login'])) {
-  $loginhandle = mysqli_connect("localhost", "root", "", "glucoguide");
+  include ('config.php');
   if (empty($_POST["uid"]) || empty($_POST["pwd"])) {
     $loginErr = "User ID and Password is required";
   } else {
@@ -118,7 +118,7 @@ if (isset($_POST['login'])) {
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
-      $login = mysqli_query($loginhandle, "Select * from login where userid='" . $userid . "' and password='" . $password . "';");
+      $login = mysqli_query($handle, "Select * from login where userid='" . $userid . "' and password='" . $password . "';");
       if (mysqli_num_rows($login) != 1) {
         $loginErr = "Invalid Username or Password";
       } else {
@@ -139,5 +139,5 @@ if (isset($_POST['login'])) {
       }
     }
   }
-  mysqli_close($loginhandle);
+  mysqli_close($handle);
 }
