@@ -18,11 +18,11 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["category"] === "Patient") {
   if ($_SESSION["category"] === "Patient") {
-    header("location: pat_dashboard.php");
+    header("location: ./patient_dashboard/pat_dashboard.php");
     exit;
   }
   if ($_SESSION["category"] === "Doctor") {
-    header("location: doc_dashboard.php");
+    header("location: ./doctor_dashboard/doc_dashboard.php");
     exit;
   }
 }
