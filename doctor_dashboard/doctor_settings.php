@@ -16,7 +16,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login_page.php");
+    header("location: ../login_page.php");
     exit;
 }
 ?>
@@ -33,14 +33,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         Settings
     </title>
     <!-- Favicon -->
-    <!-- <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+    <!-- <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Icons -->
-    <link href="./assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-    <link href="./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link href="./assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+    <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -53,7 +53,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="#">
                 <h1 class="text-blue">Glucoguide</h1>
-                <!-- <img src="./assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
+                <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
             </a>
 
             <!-- Form -->
@@ -85,7 +85,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </a>
         </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">
+                    <a class="nav-link" href="../logout.php">
                         <i class="ni ni-key-25 text-info"></i> Logout
                     </a>
                 </li>
@@ -105,7 +105,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="media align-items-center">
                                 <span class="avatar avatar-sm rounded-circle">
-                                    <img alt="Image placeholder" src="./assets/img/custom/profile.jpg">
+                                    <img alt="Image placeholder" src="../assets/img/custom/profile.jpg">
                                 </span>
                                 <div class="media-body ml-2 d-none d-lg-block">
                                     <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user'] ?></span>

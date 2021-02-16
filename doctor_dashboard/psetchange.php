@@ -37,7 +37,7 @@ if (isset($_POST['change']) && $_POST['change'] == "Update") {
         if (empty($_POST['tcount'])) $_POST['tcount'] = $ccount;
         if (empty($_POST['lval'])) $_POST['lval'] = $clval;
         if (empty($_POST['hval'])) $_POST['hval'] = $chval;
-        include ('config.php');
+        include ('../config.php');
         $change = mysqli_query($handle, "Update casefile set 
                                                     default_testcount='" . $_POST['tcount'] . "',
                                                     lower_normal='" . $_POST['lval'] . "',

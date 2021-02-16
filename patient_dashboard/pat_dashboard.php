@@ -16,7 +16,7 @@
 <?php
 session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login_page.php");
+    header("location: ../login_page.php");
     exit;
 }
 ?>
@@ -30,14 +30,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     Dashboard
   </title>
   <!-- Favicon -->
-  <!-- <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+  <!-- <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="./assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="./assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <style>
+    .push{
+      padding-left: 100px;
+    }
+  </style>
 </head>
 
 <body class="">
@@ -51,7 +56,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="#">
         <h1 class="text-blue">Glucoguide</h1>
-        <!-- <img src="./assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
+        <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
       </a>
 
       <!-- Form -->
@@ -69,22 +74,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Navigation -->
       <ul class="navbar-nav">
         <li class="nav-item  active ">
-          <a class="nav-link  active " href="doc_dashboard.php">
+          <a class="nav-link  active " href="#">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="doctor_settings.php">
-            <i class="ni ni-single-02 text-yellow"></i> Settings
-          </a>
-        </li>
         <!-- <li class="nav-item">
-          <a class="nav-link " href="./examples/tables.html">
-            <i class="ni ni-bullet-list-67 text-red"></i> Tables
+          <a class="nav-link " href="./examples/profile.html">
+            <i class="ni ni-single-02 text-yellow"></i> User profile
           </a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="logout.php">
+          <a class="nav-link " href="prev_reading.php">
+            <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../logout.php">
             <i class="ni ni-key-25 text-info"></i> Logout
           </a>
         </li>
@@ -105,10 +110,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
               aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="./assets/img/custom/profile.jpg">
+                  <img alt="Image placeholder" src="../assets/img/custom/profile.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user'] ?></span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user'];?></span>
                 </div>
               </div>
             </a>
@@ -127,51 +132,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <!-- Dashboard info here-->
     <?php
-    echo "<h1 class=\"p-5\"> Hello, Dr.".$_SESSION['user']."</h1>";
-    echo "<h3 class=\"p-3\">Your Patients</h3>";
-    include ('config.php');
-    if (mysqli_connect_error()) {
-      echo "<span class='text-danger'>Unable to connect to database!</span>";
-    } else {
-      echo "<table class=\"table align-items-center table-flush\">
-                <thead>
-                  <tr>
-                    <th scope=\"col\">Serial No.</th>
-                    <th scope=\"col\">Name of Patient</th>
-                    <th scope=\"col\">Patient ID</th>
-                    
-                    <th scope=\"col\">Report</th>
-                  </tr>
-                </thead>
-                <tbody>";
-      $count=1;
-      $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='".$_SESSION['userid']."'");
-      while($plist=mysqli_fetch_array($patient)){
-        $pid=$plist['userid'];
-        $pname=$plist['name'];
-            echo "<tr>
-                    <td>"
-                    . $count . 
-                    "</td>
-                    <th>"
-                        .$plist['name'].
-                    "</th>
-                    <td>"
-                      .$plist['userid'].
-                    "</td>
-                    
-                    <td>
-                    <a href=\"patientinfo.php?patient=".$pid."&"."name=$pname\" class=\"mr-3\">"
-                        . "Detailed Report" .
-                        "</a>
-                    </td>
-                  </tr>";
-            $count++;
-      }
-      echo "</tbody></table>";
-    } 
+    echo "<h1 class=\"p-5\"> Hello, ".$_SESSION['user']."</h1>";
+	  include ('readings.php');
     ?>
-
+	
     <div class="container-fluid">
       <!-- Footer -->
       <footer class="footer">

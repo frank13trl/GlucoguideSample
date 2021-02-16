@@ -1,5 +1,5 @@
 <?php
-include ('config.php');
+include ('../config.php');
 if (mysqli_connect_error()) {
     die("<span class='text-danger'>Unable to connect to database!</span>");
 } else {

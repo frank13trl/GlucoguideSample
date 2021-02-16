@@ -2,7 +2,7 @@
 session_start();
 if (isset($_POST['prick'])){
 	$msg="";
-	include ('config.php');
+	include ('../config.php');
 	$pid=$_SESSION['userid'];
 	$avg=$_SESSION['avg'];
 	$readings_string=$_SESSION['read'];

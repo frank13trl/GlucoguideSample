@@ -1,6 +1,6 @@
 <?php
         echo "<h1 class=\"p-5\">Your Current Settings</h1>";
-        include ('config.php');
+        include ('../config.php');
         if (mysqli_connect_error()) {
             echo "<span class='text-danger'>Unable to connect to database!</span>";
         } else {
@@ -40,7 +40,7 @@
                 if (empty($_POST['dtcount'])) $_POST['dtcount'] = $ccount;
                 if (empty($_POST['dlval'])) $_POST['dlval'] = $clval;
                 if (empty($_POST['dhval'])) $_POST['dhval'] = $chval;
-                include ('config.php');
+                include ('../config.php');
                 $change = mysqli_query($handle, "Update doctor_settings set 
                                                         default_testcount='" . $_POST['dtcount'] . "',
                                                         lower_normal='" . $_POST['dlval'] . "',

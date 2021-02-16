@@ -63,7 +63,7 @@
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
         <a class="navbar-brand" href="../index.html">
-          <h1 class="text-white">Glucoguide</h1>
+          <h1 class="text-white text-capitalize">Glucoguide</h1>
           <!-- <img src="./assets/img/brand/white.png" /> -->
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

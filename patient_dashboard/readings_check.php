@@ -39,7 +39,7 @@ if(count($_POST))
 	else {
 		echo "<h4 class='push'>Your readings are normal</h4><br/>";
 		$prick=0;
-		include ('config.php');
+		include ('../config.php');
 		$sql = "INSERT INTO patient_reading (patient_id,readings,reading_avg,pricked,action_taken)
 		VALUES ('$pid','$readings_string','$avg','$prick',DEFAULT)";
 

@@ -131,10 +131,10 @@ if (isset($_POST['login'])) {
         $_SESSION["category"] = $category;
         $_SESSION["loggedin"] = true;
         if ($category === "Patient") {
-          header('Location: pat_dashboard.php');
+          header('Location: ./patient_dashboard/pat_dashboard.php');
         }
         if ($category === "Doctor") {
-          header('Location:doc_dashboard.php');
+          header('Location: ./doctor_dashboard/doc_dashboard.php');
         }
       }
     }

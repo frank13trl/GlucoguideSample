@@ -1,6 +1,6 @@
 <?php
 
-include ('config.php');
+include ('../config.php');
 if ($handle->connect_error) {
     die("Connection failed: " . $handle->connect_error);
 }
