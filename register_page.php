@@ -150,7 +150,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-badge"></i></span>
                     </div>
-                    <input class="form-control" placeholder="User ID" type="text" value="<?php echo $userid; ?>" name="userid">
+                    <input class="form-control" placeholder="User ID" type="text" value="<?php echo $userid; ?>" name="userid" maxlength="5">
                   </div>
                   <?php if (!empty($useridErr)) {echo "<span class='error'>";echo $useridErr;echo "</span>";
                   } ?>
