@@ -25,14 +25,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <html lang="en">
 
 <head>
-  <?php
-  
-  ?>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>
-    <?php echo $_GET['patient']; ?>'s Report
-  </title>
+  <title>Profile</title>
   <!-- Favicon -->
   <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -70,8 +65,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form>
       <!-- Navigation -->
       <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="doc_dashboard.php">
+        <li class="nav-item">
+          <a class="nav-link" href="doc_dashboard.php">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
@@ -80,8 +75,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <i class="ni ni-ui-04 text-red"></i> Settings
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="userprofile.php">
+        <li class="nav-item  active ">
+          <a class="nav-link  active " href="#">
             <i class="ni ni-single-02 text-yellow"></i> Profile
           </a>
         </li>
@@ -100,7 +95,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white d-none d-lg-inline-block" href="#">Patient Report</a>
+        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Profile</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,68 +120,108 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
       </div>
     </div>
-
-    <!-- Dashboard info here-->
-    <?php
-    $_SESSION['patient']=$_GET['patient'];
-    $_SESSION['name']=$_GET['name'];
-    echo "<h1 class=\"p-5\">";echo $_GET['name']; echo"'s Report</h1>";
-    include ('../config.php');
+    <?php $did = $_SESSION['userid'];
+    include('../config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
-      echo "<table class=\"table align-items-center table-flush\">
-                <thead>
-                  <tr>
-                    <th scope=\"col\">Serial No.</th>
-                    <th scope=\"col\">Average Value</th>
-                    <th scope=\"col\">Pricked Value</th>
-                    <th scope=\"col\">Updated On</th>
-                  </tr>
-                </thead>
-                <tbody>";
-      $count = 1;
-      $list = mysqli_query($handle, "Select * from patient_reading where patient_id='".$_GET['patient']."';");
-      if (mysqli_num_rows($list) == 0) {
-        echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
-      } else {
-        while ($info = mysqli_fetch_array($list)) {
-          echo "<tr>
-                  <td>"
-            . $count .
-            "</td>
-             <th>"
-            . $info['reading_avg'] .
-            "</th>
-             <td>";
-             if($info['pricked']==0) echo "Nil";
-             else echo "<b>".$info['pricked']."</b>";
-            echo "</td>
-                  <td>"
-            . $info['action_taken'] .
-            "</td>
-                </tr>";
-          $count++;
-        }
-      }
-      echo "</tbody></table>";
-    }
-    include ('psetchange.php')
-    ?>
+      $sql = "select * from doctor_info where userid = '$did'";
+      $result = mysqli_query($handle, $sql);
+      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $count = mysqli_num_rows($result);
 
-    <div class="container-fluid">
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
+      if ($count == 1) {
+
+        $city = $row["city"];
+        $email = $row["email"];
+        $phone = $row["phone"];
+        $hospital = $row["hospital"];
+        $description = $row["description"];
+      }
+    }
+    ?>
+    <!-- Dashboard info here-->
+    <div class="col-xl mt-5">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Your Profile</h3>
             </div>
           </div>
         </div>
-      </footer>
+        <div class="card-body">
+          <form>
+            <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Userid</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $did; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="hospital">Hospital</label>
+                    <input type="text" id="hospital" class="form-control form-control-alternative" value="<?php echo $hospital; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="desc">Description</label>
+                    <input type="text" id="desc" class="form-control form-control-alternative" value="<?php echo $description; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Contact Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="number" id="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <!-- Footer -->
+        <footer class="footer">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-xl-6">
+              <div class="text-center text-muted fixed-bottom mb-5">
+                Glucoguide Team
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
-  </div>
 </body>
 
 </html>

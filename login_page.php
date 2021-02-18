@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["category"] === "Patient") {
+  if ($_SESSION["category"] === "Patient") {
+    header("Location: ./patient_dashboard/pat_dashboard.php");
+    exit();
+  }
+  if ($_SESSION["category"] === "Doctor") {
+    header("Location: ./doctor_dashboard/doc_dashboard.php");
+    exit();
+  }
+}
+
+?>
 <!--
 
 =========================================================
@@ -14,20 +28,6 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
-<?php
-session_start();
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["category"] === "Patient") {
-  if ($_SESSION["category"] === "Patient") {
-    header("location: ./patient_dashboard/pat_dashboard.php");
-    exit;
-  }
-  if ($_SESSION["category"] === "Doctor") {
-    header("location: ./doctor_dashboard/doc_dashboard.php");
-    exit;
-  }
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +38,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION[
     Login
   </title>
   <!-- Favicon -->
-  <!-- <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+  <link href="./assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -67,9 +67,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION[
           <h1 class="text-white text-capitalize">Glucoguide</h1>
           <!-- <img src="./assets/img/brand/white.png" /> -->
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
         <div class="collapse navbar-collapse" id="navbar-collapse-main">
           <!-- Collapse header -->
           <div class="navbar-collapse-header d-md-none">

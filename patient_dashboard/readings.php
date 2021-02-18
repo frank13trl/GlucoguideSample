@@ -6,12 +6,10 @@ if ($handle->connect_error) {
 }
 $pid = $_SESSION['userid'];
 
-
 $sql = "select * from casefile where patient_id = '$pid'";
 $result = mysqli_query($handle, $sql);
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $count = mysqli_num_rows($result);
-
 
 if ($count == 1) {
 
@@ -28,8 +26,6 @@ if ($count == 1) {
     <script type="text/javascript">
         var x = "<?php echo $val; ?>";
 
-
-
         function add_feed() {
             var div1 = document.createElement('div');
 
@@ -39,18 +35,10 @@ if ($count == 1) {
 
             x = x - 1;
 
-
             if (x == 0) {
                 document.getElementById("addnew").style.display = "none";
                 document.getElementById("submit").style.display = "block";
-
-
-
-
-
-
             }
-
         }
     </script>
 
@@ -62,7 +50,7 @@ if ($count == 1) {
 </head>
 
 <body>
-    <form method="post" action="">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <table style="margin: 20px;">
             <tr>
                 <td valign=top>

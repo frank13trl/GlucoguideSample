@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("Location: ../login_page.php");
+  exit();
+}
+?>
 <!--
 
 =========================================================
@@ -13,13 +20,7 @@
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
-<?php
-session_start();
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: ../login_page.php");
-  exit;
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +31,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     Previous Readings
   </title>
   <!-- Favicon -->
-  <!-- <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+  <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -66,21 +67,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form>
       <!-- Navigation -->
       <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="pat_dashboard.php">
+        <li class="nav-item">
+          <a class="nav-link  " href="pat_dashboard.php">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#">
+        <li class="nav-item  active ">
+          <a class="nav-link active " href="#">
             <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link " href="./examples/tables.html">
-            <i class="ni ni-bullet-list-67 text-red"></i> Tables
+        <li class="nav-item">
+          <a class="nav-link " href="userprofile.php">
+            <i class="ni ni-single-02 text-yellow"></i> Profile
           </a>
-        </li> -->
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="../logout.php">
             <i class="ni ni-key-25 text-info"></i> Logout
@@ -96,7 +97,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Dashboard</a>
+        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Previous readings</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,7 +138,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <th scope=\"col\">Readings</th>
                     <th scope=\"col\">Average Reading</th>
                     <th scope=\"col\">Pricked Value</th>  
-                    <th scope=\"col\">Action Taken</th>
+                    <th scope=\"col\">Updated On</th>
                   </tr>
                 </thead>
                 <tbody>";

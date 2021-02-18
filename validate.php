@@ -84,7 +84,7 @@ if (isset($_POST['reg_user'])) {
       $dinfquery = mysqli_query($handle, "Insert into doctor_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $hospital . "','" . $city . "','" . $desc . "');");
       $dsetquery = mysqli_query($handle, "Insert into doctor_settings values('" . $userid . "',DEFAULT,DEFAULT,DEFAULT);");
       if ($logquery && $dinfquery && $dsetquery) {
-        $message1 = "Account added successfully<br/>Redirecting to login page";
+        $message1 = "Account added successfully. Redirecting to login page";
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
       } else {
         $message2 = "Could not add login details for doctor !";
@@ -95,7 +95,7 @@ if (isset($_POST['reg_user'])) {
       $psetquery = mysqli_query($handle, "Insert into casefile (patient_id,doctor_id,default_testcount,lower_normal,upper_normal) 
                                                                 Select '" . $userid . "',doctor_settings.* from doctor_settings where doctor_id='" . $docid . "';");
       if ($logquery && $pinfquery && $psetquery) {
-        $message1 = "Account added successfully<br/>Redirecting to login page";
+        $message1 = "Account added successfully. Redirecting to login page";
         session_start();
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
       } else {
@@ -131,10 +131,10 @@ if (isset($_POST['login'])) {
         $_SESSION["category"] = $category;
         $_SESSION["loggedin"] = true;
         if ($category === "Patient") {
-          header('Location: ./patient_dashboard/pat_dashboard.php');
+          echo "<script>window.location.replace('./patient_dashboard/pat_dashboard.php')</script>";
         }
         if ($category === "Doctor") {
-          header('Location: ./doctor_dashboard/doc_dashboard.php');
+          echo "<script>window.location.replace('./doctor_dashboard/doc_dashboard.php')</script>";
         }
       }
     }

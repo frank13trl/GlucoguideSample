@@ -19,7 +19,6 @@ if(count($_POST))
 	$readings_string= implode(" , ",$readings);
 	echo "<br/><span class='push'>Your Readings are : ".$readings_string."</span><br/>";
 	$_SESSION["read"] = $readings_string;
-	
 
     $avg=$sum/$len;
 	$_SESSION["avg"] = $avg;
@@ -31,9 +30,7 @@ if(count($_POST))
 		echo "<form action='prick.php' method='post' class='push'>
 		<input type='text' class='form-control w-25' name='prick_value' placeholder='Prick and input reading' required>
 		<br/><br/><input type='submit' class='btn btn-primary p-20' name='prick' value='Update'>
-		</form>";
-		
-	 
+		</form>"; 
 		
 	}
 	else {

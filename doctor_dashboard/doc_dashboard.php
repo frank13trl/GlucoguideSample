@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("Location: ../login_page.php");
+    exit();
+}
+?>
 <!--
 
 =========================================================
@@ -13,13 +20,7 @@
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
-<?php
-session_start();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: ../login_page.php");
-    exit;
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +31,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     Dashboard
   </title>
   <!-- Favicon -->
-  <!-- <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+  <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -69,20 +70,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Navigation -->
       <ul class="navbar-nav">
         <li class="nav-item  active ">
-          <a class="nav-link  active " href="doc_dashboard.php">
+          <a class="nav-link  active " href="#">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="doctor_settings.php">
-            <i class="ni ni-single-02 text-yellow"></i> Settings
+            <i class="ni ni-ui-04 text-red"></i> Settings
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link " href="./examples/tables.html">
-            <i class="ni ni-bullet-list-67 text-red"></i> Tables
+        <li class="nav-item">
+          <a class="nav-link " href="userprofile.php">
+            <i class="ni ni-single-02 text-yellow"></i> Profile
           </a>
-        </li> -->
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="../logout.php">
             <i class="ni ni-key-25 text-info"></i> Logout
@@ -146,6 +147,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <tbody>";
       $count=1;
       $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='".$_SESSION['userid']."'");
+      if (mysqli_num_rows($patient) == 0) {
+        echo "<tr><td colspan = 5 align=center>No patients yet !</td></tr>";
+      } else {
       while($plist=mysqli_fetch_array($patient)){
         $pid=$plist['userid'];
         $pname=$plist['name'];
@@ -167,6 +171,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </td>
                   </tr>";
             $count++;
+        }
       }
       echo "</tbody></table>";
     } 

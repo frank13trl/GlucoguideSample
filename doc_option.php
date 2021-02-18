@@ -5,6 +5,6 @@ if (mysqli_connect_error()) {
 } else {
     $list = mysqli_query($handle, "Select userid, name from doctor_info;");
     while ($row = mysqli_fetch_array($list)) {
-        echo "<option value=\"" . $row['userid'] . "\">" . $row['name'] . "</option>";
+        echo "<option value=" . $row['userid'] . ">Dr. " . $row['name'] . "</option>";
     }
 }

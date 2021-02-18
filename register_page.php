@@ -24,7 +24,7 @@
     Glucoguide - Register
   </title>
   <!-- Favicon -->
-  <!-- <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png"> -->
+  <link href="./assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -53,6 +53,13 @@
       background: #f2dede;
       border-radius: 5px;
     }
+    .success {
+      font-size: 14px;
+      padding: 5px;
+      color: #07a316;
+      background: #a7ebc2;
+      border-radius: 5px;
+    }
   </style>
 </head>
 
@@ -66,9 +73,9 @@
           <h1 class="text-white text-capitalize">Glucoguide</h1>
           <!-- <img src="./assets/img/brand/white.png" /> -->
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
         <div class="collapse navbar-collapse" id="navbar-collapse-main">
           <!-- Collapse header -->
           <div class="navbar-collapse-header d-md-none">
@@ -101,7 +108,7 @@
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8">
       <div class="container">
-        <div class="header-body text-center mb-4 mt--5">
+        <div class="header-body text-center mb-4 mt--2">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">Create your account</h1>
@@ -236,8 +243,8 @@
                   <button type="submit" name="reg_user" class="btn btn-primary">Create Account</button>
                 </div>
                 <div class="text-muted text-center mt-3"><small>
-                <?php if (!empty($message1)) {echo "<span class='text-success'>";echo $message1 . "<br>";echo "</span>";}
-                      if (!empty($message2)) {echo "<span class='text-warning'>";echo $message2 . "<br>";echo "</span>";}?>
+                <?php if (!empty($message1)) {echo "<span class='success'>";echo $message1 . "<br>";echo "</span>";}
+                      if (!empty($message2)) {echo "<span class='error'>";echo $message2 . "<br>";echo "</span>";}?>
                 </small></div>
               </form>
             </div>
