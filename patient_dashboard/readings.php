@@ -1,6 +1,6 @@
 <?php
 
-include ('../config.php');
+include('../config.php');
 if ($handle->connect_error) {
     die("Connection failed: " . $handle->connect_error);
 }
@@ -51,10 +51,24 @@ if ($count == 1) {
 
 <body>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <br />
+        <div class="form-check push">
+            <input class="form-check-input" type="radio" name="fasting" value="Before food" id="bf" checked>
+            <label class="form-check-label" for="bf">
+                Before food
+            </label>
+        </div>
+        <br />
+        <div class="form-check push">
+            <input class="form-check-input" type="radio" name="fasting" value="After Food" id="af">
+            <label class="form-check-label" for="af">
+                After food
+            </label>
+        </div>
         <table style="margin: 20px;">
             <tr>
                 <td valign=top>
-                    <h3 style="padding: 30px;">Enter your readings : </h3>
+                    <h3 style="padding: 30px;">Glucoguide readings : </h3>
                 </td>
                 <td>
                     <div id="newlink">
@@ -67,7 +81,7 @@ if ($count == 1) {
         </table>
         <p class="push">
             <br>
-            <input type='button' id="addnew" class='btn btn-primary m-' onClick="javascript:add_feed()" style="display:block;" value='Next'>
+            <input type='button' id="addnew" class='btn btn-primary' onClick="javascript:add_feed()" style="display:block;" value='Next'>
             <input type="submit" class='btn btn-primary' style="display:none;" id="submit" name="submit1"><br>
             <input type="reset" class='btn btn-warning' name="reset1"><br>
 
@@ -75,7 +89,7 @@ if ($count == 1) {
 
     </form>
     <?php
-    include ('readings_check.php');
+    include('readings_check.php');
 
 
     ?>

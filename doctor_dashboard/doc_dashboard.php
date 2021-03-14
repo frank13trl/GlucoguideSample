@@ -1,8 +1,8 @@
 <?php
 session_start();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("Location: ../login_page.php");
-    exit();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("Location: ../login_page.php");
+  exit();
 }
 ?>
 <!--
@@ -39,14 +39,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <style>
+    #floating-button {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #5e72e4;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      box-shadow: 0px 2px 5px #666;
+    }
+  </style>
 </head>
 
 <body class="">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
-        aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
@@ -58,8 +69,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Form -->
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
-          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search"
-            aria-label="Search">
+          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
           <div class="input-group-prepend">
             <div class="input-group-text">
               <span class="fa fa-search"></span>
@@ -102,8 +112,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Dashboard</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
-            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
+            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                   <img alt="Image placeholder" src="../assets/img/custom/profile.jpg">
@@ -127,56 +136,75 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
 
     <!-- Dashboard info here-->
-    <?php
-    echo "<h1 class=\"p-5\"> Hello, Dr.".$_SESSION['user']."</h1>";
-    echo "<h3 class=\"p-3\">Your Patients</h3>";
-    include ('../config.php');
-    if (mysqli_connect_error()) {
-      echo "<span class='text-danger'>Unable to connect to database!</span>";
-    } else {
-      echo "<table class=\"table align-items-center table-flush\">
-                <thead>
+    <div class="container-fluid">
+      <?php
+      echo "<h1 class='p-5'> Hello, Dr." . $_SESSION['user'] . "</h1>"; ?>
+      <div class="row mt--4">
+        <div class="col mb-4">
+          <div class="card shadow">
+            <h3 class="card-header">Your Patients</h3>
+            <div class="card-body" style="overflow-y:hidden;">
+              <?php
+              include('../config.php');
+              if (mysqli_connect_error()) {
+                echo "<span class='text-danger'>Unable to connect to database!</span>";
+              } else {
+                echo "<table class='table table-striped table-hover'>
+                
                   <tr>
-                    <th scope=\"col\">Serial No.</th>
-                    <th scope=\"col\">Name of Patient</th>
-                    <th scope=\"col\">Patient ID</th>
-                    
-                    <th scope=\"col\">Report</th>
+                    <th>Serial No.</th>
+                    <th>Name of Patient</th>
+                    <th>Patient ID</th>
+                    <th>Report</th>
                   </tr>
-                </thead>
+                
                 <tbody>";
-      $count=1;
-      $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='".$_SESSION['userid']."'");
-      if (mysqli_num_rows($patient) == 0) {
-        echo "<tr><td colspan = 5 align=center>No patients yet !</td></tr>";
-      } else {
-      while($plist=mysqli_fetch_array($patient)){
-        $pid=$plist['userid'];
-        $pname=$plist['name'];
-            echo "<tr>
+                $count = 1;
+                $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='" . $_SESSION['userid'] . "'");
+                if (mysqli_num_rows($patient) == 0) {
+                  echo "<tr><td colspan = 5 align=center>No patients yet !</td></tr>";
+                } else {
+                  while ($plist = mysqli_fetch_array($patient)) {
+                    $pid = $plist['userid'];
+                    $pname = $plist['name'];
+                    echo "<tr>
                     <td>"
-                    . $count . 
-                    "</td>
+                      . $count .
+                      "</td>
                     <th>"
-                        .$plist['name'].
-                    "</th>
+                      . $plist['name'] .
+                      "</th>
                     <td>"
-                      .$plist['userid'].
-                    "</td>
+                      . $plist['userid'] .
+                      "</td>
                     
                     <td>
-                    <a href=\"patientinfo.php?patient=".$pid."&"."name=$pname\" class=\"mr-3\">"
-                        . "Detailed Report" .
-                        "</a>
+                    <a href='patientinfo.php?patient=$pid&name=$pname'>"."Detailed Report"."</a>
                     </td>
                   </tr>";
-            $count++;
-        }
-      }
-      echo "</tbody></table>";
-    } 
-    ?>
+                    $count++;
+                  }
+                }
+                echo "</tbody></table>";
+              }
+              ?>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow" >
+            <h4 class="card-header">New notifications</h4>
+            <div class="card-body" style="height:520px; overflow-y:scroll;">
 
+            <?php include 'display.php'; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+      </div>
+    </div>
     <div class="container-fluid">
       <!-- Footer -->
       <footer class="footer">
@@ -190,6 +218,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       </footer>
     </div>
   </div>
+  <a href="https://my.saleassist.ai/#/auth/login">
+    <div id="floating-button">
+
+      <i class="ni ni-chat-round text-white" style="margin-top: 19px; margin-left: 19px;"></i>
+
+    </div>
+  </a>
 </body>
 
 </html>

@@ -37,6 +37,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <style>
+    #status {
+      animation: fadeOut 2s forwards;
+      animation-delay: 3s;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body class="">
@@ -121,6 +137,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </div>
     </div>
     <?php $did = $_SESSION['userid'];
+    $msg = "";
     include('../config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
@@ -138,12 +155,42 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         $hospital = $row["hospital"];
         $description = $row["description"];
       }
+      if (isset($_POST['update'])) {
+        if (!empty($_POST['city'])) {
+          $city = $_POST["city"];
+        }
+        if (!empty($_POST["email"])) {
+          $email = $_POST["email"];
+        }
+        if (!empty($_POST['phone'])) {
+          $phone = $_POST["phone"];
+        }
+        if (!empty($_POST['hospital'])) {
+          $hospital = $_POST["hospital"];
+        }
+        if (!empty($_POST['description'])) {
+          $desc = $_POST["description"];
+        }
+
+
+        $sql = mysqli_query($handle, "Update doctor_info set 
+                            city='$city',
+														email='$email',
+														phone='$phone',
+														hospital='$hospital',
+														description='$desc' where userid='$did';");
+        if ($sql) {
+          $msg = "<span class='push text-success'>Profile Updated</span>";
+        } else {
+          $msg = "<span class='push text-danger'>Error updating profile</span>";
+        }
+      }
     }
     ?>
     <!-- Dashboard info here-->
     <div class="col-xl mt-5">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
+      <div class="card shadow">
+        <div class="card-header">
           <div class="row align-items-center">
             <div class="col-8">
               <h3 class="mb-0">Your Profile</h3>
@@ -151,57 +198,73 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
         <div class="card-body">
-          <form>
-            <h6 class="heading-small text-muted mb-4">Personal Information</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="name">Name</label>
-                    <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Userid</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $did; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="hospital">Hospital</label>
-                    <input type="text" id="hospital" class="form-control form-control-alternative" value="<?php echo $hospital; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="desc">Description</label>
-                    <input type="text" id="desc" class="form-control form-control-alternative" value="<?php echo $description; ?>" readonly>
+          <form action="" method="POST">
+            <div class="row">
+              <div class="col-sm">
+                <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="name">Name</label>
+                        <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Userid</label>
+                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $did; ?>" readonly>
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="hospital">Hospital</label>
+                        <input type="text" name="hospital" class="form-control form-control-alternative" value="<?php echo $hospital; ?>">
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="desc">Description</label>
+                        <input type="text" name="description" class="form-control form-control-alternative" value="<?php echo $description; ?>">
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <hr class="my-4" />
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Contact Information</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input type="email" id="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="phone">Phone</label>
-                    <input type="number" id="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-city">City</label>
-                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>" readonly>
+              <hr class="my-4" />
+              <!-- Address -->
+              <div class="col-sm border-left">
+                <h6 class="heading-small text-muted mb-4">Contact Information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="email">Email</label>
+                        <input type="email" name="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>">
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="phone">Phone</label>
+                        <input type="number" name="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>">
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-city">City</label>
+                        <input type="text" name="city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>">
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary" name="update">Edit Profile</button>
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <?php if (!empty($msg)) {
+                        echo "<div id='status' class='text-center'>$msg</div>";
+                      } ?>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -209,19 +272,23 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </form>
         </div>
       </div>
-      <div class="container-fluid">
-        <!-- Footer -->
-        <footer class="footer">
-          <div class="row align-items-center justify-content-center">
-            <div class="col-xl-6">
-              <div class="text-center text-muted fixed-bottom mb-5">
-                Glucoguide Team
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
     </div>
+  </div>
+  <div class="container-fluid">
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-xl-6">
+          <div class="text-center text-muted fixed-bottom mb-5">
+            Glucoguide Team
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  </div>
+
+  </div>
 </body>
 
 </html>

@@ -27,9 +27,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>
-    User Profile
-  </title>
+  <title>Profile</title>
   <!-- Favicon -->
   <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -39,22 +37,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-  <style>
-    #status {
-      animation: fadeOut 2s forwards;
-      animation-delay: 3s;
-    }
-
-    @keyframes fadeOut {
-      from {
-        opacity: 1;
-      }
-
-      to {
-        opacity: 0;
-      }
-    }
-  </style>
 </head>
 
 <body class="">
@@ -83,18 +65,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form>
       <!-- Navigation -->
       <ul class="navbar-nav">
-        <li class="nav-item  ">
-          <a class="nav-link  " href="pat_dashboard.php">
+        <li class="nav-item">
+          <a class="nav-link" href="doc_dashboard.php">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="prev_reading.php">
-            <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
+          <a class="nav-link " href="doctor_settings.php">
+            <i class="ni ni-ui-04 text-red"></i> Settings
           </a>
         </li>
-        <li class="nav-item active ">
-          <a class="nav-link active " href="#">
+        <li class="nav-item  active ">
+          <a class="nav-link  active " href="#">
             <i class="ni ni-single-02 text-yellow"></i> Profile
           </a>
         </li>
@@ -138,12 +120,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
       </div>
     </div>
-    <?php $pid = $_SESSION['userid'];
+    <?php $did = $_SESSION['userid'];
+    $msg = "";
     include('../config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
-      $sql = "select * from patient_info where userid = '$pid'";
+      $sql = "select * from doctor_info where userid = '$did'";
       $result = mysqli_query($handle, $sql);
       $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $count = mysqli_num_rows($result);
@@ -153,24 +136,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         $city = $row["city"];
         $email = $row["email"];
         $phone = $row["phone"];
+        $hospital = $row["hospital"];
+        $description = $row["description"];
       }
-      $sql2 = "select * from casefile where patient_id = '$pid'";
-      $result2 = mysqli_query($handle, $sql2);
-      $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
-      $count2 = mysqli_num_rows($result2);
-
-      if ($count2 == 1) {
-        $did = $row2["doctor_id"];
-        $sql3 = "select * from doctor_info where userid = '$did'";
-        $result3 = mysqli_query($handle, $sql3);
-        $row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
-        $count3 = mysqli_num_rows($result3);
-
-        if ($count3 == 1) {
-          $doctorname = $row3["name"];
-        }
-      }
-      if (isset($_POST['update'])) {
+      if (isset($_POST['up_profile'])) {
         if (!empty($_POST['city'])) {
           $city = $_POST["city"];
         }
@@ -180,23 +149,34 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         if (!empty($_POST['phone'])) {
           $phone = $_POST["phone"];
         }
+        if (!empty($_POST['hospital'])) {
+          $hospital = $_POST["hospital"];
+        }
+        if (!empty($_POST['description'])) {
+          $desc = $_POST["description"];
+        }
 
 
-        $sql = mysqli_query($handle, "Update patient_info set 
+        $sql = mysqli_query($handle, "Update doctor_info set 
                             city='$city',
 														email='$email',
-														phone='$phone' where userid='$pid';");
+														phone='$phone',
+														hospital='$hospital',
+														description='$desc' where userid='$did';");
         if ($sql) {
-          $msg = "<span class='push text-success'>Profile Updated</span>";
+          $msg = "<br/><span class='push text-success'>Profile Updated</span>";
         } else {
-          $msg = "<span class='push text-danger'>Error updating profile</span>";
+          $msg = "<br/><span class='push text-danger'>Error updating profile</span>";
         }
       }
-    } ?>
+    }
+
+
+    ?>
     <!-- Dashboard info here-->
     <div class="col-xl mt-5">
-      <div class="card shadow">
-        <div class="card-header ">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
               <h3 class="mb-0">Your Profile</h3>
@@ -204,91 +184,87 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-sm">
-              <form>
-                <h6 class="heading-small text-muted mb-4">Personal Information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="name">Name</label>
-                        <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-username">User ID</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $pid; ?>" readonly>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="dcotor">Your Doctor</label>
-                        <input type="text" id="dcotor" class="form-control form-control-alternative" placeholder="dr" value="<?php echo "Dr." . $doctorname; ?>" readonly>
-                      </div>
-                    </div>
+          <form action="" method="post">
+            <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
                   </div>
                 </div>
-              </form>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Userid</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $did; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="hospital">Hospital</label>
+                    <input type="text" id="hospital" class="form-control form-control-alternative" value="<?php echo $hospital; ?>" name="hospital">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="desc">Description</label>
+                    <input type="text" id="desc" class="form-control form-control-alternative" value="<?php echo $description; ?>" name="description">
+                  </div>
+                </div>
+              </div>
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <div class="col-sm border-left">
-              <form action="" method="POST">
-                <h6 class="heading-small text-muted mb-4">Contact Information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="email">Email</label>
-                        <input type="email" name="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="phone">Phone</label>
-                        <input type="number" name="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" name="city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary my-4" name="update">Edit Profile</button>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <?php if (!empty($msg)) {
-                        echo "<div id='status' class='text-center'>$msg</div>";
-                      } ?>
-                    </div>
+            <h6 class="heading-small text-muted mb-4">Contact Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>" name="email">
                   </div>
                 </div>
-              </form>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="number" id="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>" name="phone">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>" name="city">
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <input type='submit' class='btn btn-primary' value='Update Profile' name='up_profile'>
+              </div>
+              <?php
+              if (!empty($msg)) {
+
+                echo $msg;
+              }
+              ?>
+          </form>
         </div>
       </div>
-    </div>
-
-    <div class="container-fluid">
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
+      <div class="container-fluid">
+        <!-- Footer -->
+        <footer class="footer">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-xl-6">
+              <div class="text-center text-muted fixed-bottom mb-5">
+                Glucoguide Team
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
-  </div>
 </body>
 
 </html>

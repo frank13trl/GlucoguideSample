@@ -143,7 +143,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </thead>
                 <tbody>";
       $count = 1;
-      $result = mysqli_query($handle, "Select * from patient_reading where patient_id='$pid';");
+      $result = mysqli_query($handle, "Select * from patient_reading where patient_id='$pid' order by action_taken desc;");
       if (mysqli_num_rows($result) == 0) {
         echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
       } else {
@@ -156,14 +156,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             . $row[1] .
             "</th>
                     <th>"
-            . $row[2] .
+            . $row[3] .
             "</th>
                     <td>";
-          if ($row[3] == 0) echo "Nil";
-          else echo "<b>$row[3]</b>";
+          if ($row[4] == 0) echo "Nil";
+          else echo "<b>$row[4]</b>";
           echo "</td>
                     <td>"
-            . $row[4] .
+            . $row[5] .
             "</td>
                   </tr>";
           $count++;

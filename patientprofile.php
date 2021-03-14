@@ -39,22 +39,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-  <style>
-    #status {
-      animation: fadeOut 2s forwards;
-      animation-delay: 3s;
-    }
-
-    @keyframes fadeOut {
-      from {
-        opacity: 1;
-      }
-
-      to {
-        opacity: 0;
-      }
-    }
-  </style>
 </head>
 
 <body class="">
@@ -139,6 +123,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </div>
     </div>
     <?php $pid = $_SESSION['userid'];
+    $msg = "";
     include('../config.php');
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
@@ -170,7 +155,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           $doctorname = $row3["name"];
         }
       }
-      if (isset($_POST['update'])) {
+      if (isset($_POST['up_profile'])) {
         if (!empty($_POST['city'])) {
           $city = $_POST["city"];
         }
@@ -183,112 +168,105 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
         $sql = mysqli_query($handle, "Update patient_info set 
-                            city='$city',
+                                                        city='$city',
 														email='$email',
 														phone='$phone' where userid='$pid';");
         if ($sql) {
-          $msg = "<span class='push text-success'>Profile Updated</span>";
+          $msg = "<br/><span class='push text-success'>Profile Updated</span>";
         } else {
-          $msg = "<span class='push text-danger'>Error updating profile</span>";
+          $msg = "<br/><span class='push text-danger'>Error updating profile</span>";
         }
       }
     } ?>
     <!-- Dashboard info here-->
     <div class="col-xl mt-5">
-      <div class="card shadow">
-        <div class="card-header ">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-8">
-              <h3 class="mb-0">Your Profile</h3>
+              <h3 class="mb-0">Profile</h3>
             </div>
+
           </div>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-sm">
-              <form>
-                <h6 class="heading-small text-muted mb-4">Personal Information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="name">Name</label>
-                        <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-username">User ID</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $pid; ?>" readonly>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="dcotor">Your Doctor</label>
-                        <input type="text" id="dcotor" class="form-control form-control-alternative" placeholder="dr" value="<?php echo "Dr." . $doctorname; ?>" readonly>
-                      </div>
-                    </div>
+          <form action="" method="post">
+            <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control form-control-alternative" value="<?php echo $_SESSION['user'] ?>" readonly>
                   </div>
                 </div>
-              </form>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">User ID</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="userid" value="<?php echo $pid; ?>" readonly>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="dcotor">Your Doctor</label>
+                    <input type="text" id="dcotor" class="form-control form-control-alternative" placeholder="dr" value="<?php echo $doctorname; ?>" readonly>
+                  </div>
+                </div>
+              </div>
             </div>
             <hr class="my-4" />
             <!-- Address -->
-            <div class="col-sm border-left">
-              <form action="" method="POST">
-                <h6 class="heading-small text-muted mb-4">Contact Information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="email">Email</label>
-                        <input type="email" name="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="phone">Phone</label>
-                        <input type="number" name="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" name="city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>">
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary my-4" name="update">Edit Profile</button>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <?php if (!empty($msg)) {
-                        echo "<div id='status' class='text-center'>$msg</div>";
-                      } ?>
-                    </div>
+            <h6 class="heading-small text-muted mb-4">Contact Information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-control form-control-alternative" placeholder="email" value="<?php echo $email; ?>" name="email">
                   </div>
                 </div>
-              </form>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="number" id="phone" class="form-control form-control-alternative" placeholder="phone" value="<?php echo $phone; ?>" name="phone">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">City</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<?php echo $city; ?>" name="city">
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <input type='submit' class='btn btn-primary' value='Update Profile' name='up_profile'>
+              </div>
+              <?php
+              if (!empty($msg)) {
+
+                echo $msg;
+              }
+              ?>
+
+          </form>
         </div>
       </div>
-    </div>
 
-    <div class="container-fluid">
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
+      <div class="container-fluid">
+        <!-- Footer -->
+        <footer class="footer">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-xl-6">
+              <div class="text-center text-muted fixed-bottom mb-5">
+                Glucoguide Team
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
-  </div>
 </body>
 
 </html>

@@ -1,8 +1,8 @@
 <?php
 session_start();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("Location: ../login_page.php");
-    exit();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("Location: ../login_page.php");
+  exit();
 }
 ?>
 <!--
@@ -39,19 +39,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
-    .push{
+    .push {
       padding-left: 100px;
     }
   </style>
+  <script src="https://saleassist-static.s3.ap-south-1.amazonaws.com/widgets/widget.js"></script>
 </head>
 
-<body class="">
+<body class="" onload='document.getElementById("msg").value="";'>
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
-        aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
@@ -63,8 +65,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Form -->
       <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
-          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search"
-            aria-label="Search">
+          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
           <div class="input-group-prepend">
             <div class="input-group-text">
               <span class="fa fa-search"></span>
@@ -104,17 +105,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Dashboard</a>
+        <h1 class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block">Dashboard</h1>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
-            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
+            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                   <img alt="Image placeholder" src="../assets/img/custom/profile.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user'];?></span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user']; ?></span>
                 </div>
               </div>
             </a>
@@ -132,11 +132,89 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
 
     <!-- Dashboard info here-->
-    <?php
-    echo "<h1 class=\"p-5\"> Hello, ".$_SESSION['user']."</h1>";
-	  include ('readings.php');
-    ?>
-	
+    <div class="container-fluid">
+      <?php echo "<h1 class=\"p-5\"> Hello, " . $_SESSION['user'] . "</h1>"; ?>
+      <div class="row mt--4">
+        <div class="col">
+          <div class="card shadow">
+            <h5 class="card-header">Use your glucoguide to read your glucose level. Enter each value in the following fields</h5>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <?php
+                  include('readings.php');
+                  ?>
+                </div>
+                <div class="col border-left">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-sm">
+          <div class="card shadow">
+            <h5 class="card-header">Talk to your doctor</h5>
+            <div class="card-body">
+              <div id="saleassistEmbed" style="height: 500px;"></div>
+              <script>
+                EmbeddableWidget.mount({
+                  source_key: "11149d07-5e09-4522-ab95-584632295356",
+                  parentElementId: "saleassistEmbed",
+                  form_factor: "embed"
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card shadow">
+            <h5 class="card-header">Message</h5>
+            <div class="card-body" style="height: 550px;">
+              <form role="form" method="POST" action="send.php" >
+                <div class="form-group">
+                  <div class="input-group">
+                    <textarea class="form-control" id="msg" name="msg"></textarea>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-4" name="send">Send message</button>
+                  </div>
+                </div>
+              </form>
+              <hr>
+              Previous messages<br/>
+              <?php include 'display.php'; ?>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card shadow">
+            <h5 class="card-header">Graphical Information</h5>
+            <div class="card-body">
+              <?php
+              include('../config.php');
+              if (mysqli_connect_error()) {
+                echo "<span class='text-danger'>Unable to connect to database!</span>";
+              } else {
+
+                $result = mysqli_query($handle, "SELECT * FROM patient_reading where patient_id='$pid'");
+                if (mysqli_num_rows($result) == 0) {
+                  echo "<h3 style=text-align:center; class='text-danger'>No readings to show graph</h3>";
+                  echo "</div>";
+                } else {
+                  echo "<div>";
+                  include('chart.php');
+                  echo "</div>";
+                }
+              }
+              ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container-fluid">
       <!-- Footer -->
       <footer class="footer">
