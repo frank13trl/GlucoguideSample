@@ -25,13 +25,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <html lang="en">
 
 <head>
-    <?php
-
-    ?>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        Settings
+        Messages
     </title>
     <!-- Favicon -->
     <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
@@ -43,22 +40,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <!-- CSS Files -->
     <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 </head>
-<style>
-    #status {
-        animation: fadeOut 2s forwards;
-        animation-delay: 3s;
-    }
-
-    @keyframes fadeOut {
-        from {
-            opacity: 1;
-        }
-
-        to {
-            opacity: 0;
-        }
-    }
-</style>
 
 <body class="">
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -86,13 +67,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link  " href="doc_dashboard.php">
+                <li class="nav-item  active">
+                    <a class="nav-link  active" href="doc_dashboard.php">
                         <i class="ni ni-tv-2 text-primary"></i> Dashboard
                     </a>
                 </li>
-                <li class="nav-item  active ">
-                    <a class="nav-link active " href="doctor_settings.php">
+                <li class="nav-item">
+                    <a class="nav-link " href="doctor_settings.php">
                         <i class="ni ni-ui-04 text-red"></i> Settings
                     </a>
                 </li>
@@ -116,7 +97,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
             <div class="container-fluid">
                 <!-- Brand -->
-                <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Default Settings</a>
+                <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Previous messages</a>
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
                     <li class="nav-item dropdown">
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -145,20 +126,53 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <!-- Dashboard info here-->
         <div class="container-fluid">
             <div class="row mt-5">
-                <div class="col">
+                <div class="col mb-3">
                     <div class="card shadow">
+                        <h1 class="card-header">Previous Messages from <?php echo $_GET['name'] ?></h1>
                         <div class="card-body" style="overflow-y:hidden;">
-                            <h1 class="card-header">Your Current Settings</h1>
-                            <?php include('dsetchange.php');
-                            if (isset($msg)) {
-                                echo $msg;
+                            <?php
+                            // create database connectivity
+
+                            include ('../config.php');
+
+                            // fetch data from student table..
+                            $sql = "SELECT * FROM notification 
+                                    where msg_to='" . $_SESSION['userid'] . "' and msg_from='".$_GET['patient']."'  order by sent_on desc";
+
+                            $query = $handle->query($sql);
+                            if ($query->num_rows  > 0) {
+                                echo "<form method='POST' action='read.php'>
+	<table class='table table-hover table-striped'>
+    <tr>
+                    <th>Message</th>
+                    <th>Sent on</th>
+                    <th>Action</th>
+                  </tr>
+	<tbody>";
+                                while ($row = $query->fetch_assoc()) {
+                                    $pid = $row['msg_from'];
+                                    echo "<tr>
+				<td style='white-space: pre-wrap;'>" . $row['message'] . "</td>
+				<td style='white-space: pre-wrap;'>" . $row['sent_on'] . "</td>
+				<td>";
+                                    if ($row['msg_read'] == 0) {
+                                        echo "<button class='btn btn-primary btn-sm' type='submit' name='mark' value=" . $row['id'] . ">
+			 Mark as read</button>
+			 </td></tr>";
+                                    }
+                                }
+                                echo "</tbody></table></form>";
+                            } else {
+                                echo "<div class='text-center'><i>No messages to show</i></div>";
                             }
                             ?>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Footer -->
+
             <div class="row align-items-center justify-content-center">
 
                 <div class="text-center text-muted p-5">
@@ -166,7 +180,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
 
             </div>
+
         </div>
+
     </div>
 </body>
 

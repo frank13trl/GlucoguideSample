@@ -26,7 +26,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <head>
   <?php
-  
+
   ?>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,6 +42,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <style>
+    #status {
+      animation: fadeOut 2s forwards;
+      animation-delay: 3s;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body class="">
@@ -100,7 +116,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white d-none d-lg-inline-block" href="#">Patient Report</a>
+        <a class="h1 mb-0 text-white d-none d-lg-inline-block" href="#">Patient Report</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,64 +143,93 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
 
     <!-- Dashboard info here-->
-    <?php
-    $_SESSION['patient']=$_GET['patient'];
-    $_SESSION['name']=$_GET['name'];
-    echo "<h1 class=\"p-5\">";echo $_GET['name']; echo"'s Report</h1>";
-    include ('../config.php');
-    if (mysqli_connect_error()) {
-      echo "<span class='text-danger'>Unable to connect to database!</span>";
-    } else {
-      echo "<table class=\"table align-items-center table-flush\">
-                <thead>
-                  <tr>
-                    <th scope=\"col\">Serial No.</th>
-                    <th scope=\"col\">Average Value</th>
-                    <th scope=\"col\">Pricked Value</th>
-                    <th scope=\"col\">Updated On</th>
-                  </tr>
-                </thead>
-                <tbody>";
-      $count = 1;
-      $list = mysqli_query($handle, "Select * from patient_reading where patient_id='".$_GET['patient']."';");
-      if (mysqli_num_rows($list) == 0) {
-        echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
-      } else {
-        while ($info = mysqli_fetch_array($list)) {
-          echo "<tr>
-                  <td>"
-            . $count .
-            "</td>
-             <th>"
-            . $info['reading_avg'] .
-            "</th>
-             <td>";
-             if($info['pricked']==0) echo "Nil";
-             else echo "<b>".$info['pricked']."</b>";
-            echo "</td>
-                  <td>"
-            . $info['action_taken'] .
-            "</td>
-                </tr>";
-          $count++;
-        }
-      }
-      echo "</tbody></table>";
-    }
-    include ('psetchange.php')
-    ?>
-
     <div class="container-fluid">
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
+      <div class="row mt-5">
+        <div class="col mb-3">
+          <div class="card shadow">
+            <h1 class="card-header">
+              <?php
+              $_SESSION['patient'] = $_GET['patient'];
+              $_SESSION['name'] = $_GET['name'];
+              echo $_GET['name'];
+              echo "'s Report"; ?>
+            </h1>
+            <div class="card-body" style="overflow-y:hidden;">
+
+              <?php
+              include('../config.php');
+              if (mysqli_connect_error()) {
+                echo "<span class='text-danger'>Unable to connect to database!</span>";
+              } else {
+                echo "<table class='table table-striped table-hover'>
+                  <tr>
+                    <th>Serial No.</th>
+                    <th>Average Value</th>
+                    <th>Pricked Value</th>
+                    <th>Updated On</th>
+                  </tr>
+                <tbody>";
+                $count = 1;
+                $list = mysqli_query($handle, "Select * from patient_reading where patient_id='" . $_GET['patient'] . "' order by action_taken desc;");
+                if (mysqli_num_rows($list) == 0) {
+                  echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
+                } else {
+                  while ($info = mysqli_fetch_array($list)) {
+                    echo "<tr>
+                  <td>"
+                      . $count .
+                      "</td>
+             <th>"
+                      . $info['reading_avg'];
+                    if ($info['fasting'] == "before") echo " (F)";
+                    else if ($info['fasting'] == "after") echo " (M)";
+                    echo "</th>
+             <td>";
+                    if ($info['pricked'] == 0) echo "Nil";
+                    else echo "<b>" . $info['pricked'] . "</b>";
+                    echo "</td>
+                  <td>"
+                      . $info['action_taken'] .
+                      "</td>
+                </tr>";
+                    $count++;
+                  }
+                }
+                echo "</tbody></table>";
+              }
+
+              ?>
             </div>
           </div>
         </div>
-      </footer>
+        <div class="col">
+          <div class="card shadow">
+            <h3 class="card-header">
+              <?php
+              echo $_GET['name'];
+              echo "'s Settings";
+              ?>
+            </h3>
+            <div class="card-body" style="overflow-y:hidden;">
+              <?php include('psetchange.php');
+              if (isset($msg)) {
+                echo $msg;
+              }
+              ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+
+      <div class="row align-items-center justify-content-center">
+
+        <div class="text-center text-muted p-5">
+          Glucoguide Team
+        </div>
+
+      </div>
     </div>
   </div>
 </body>

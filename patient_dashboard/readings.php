@@ -53,14 +53,14 @@ if ($count == 1) {
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <br />
         <div class="form-check push">
-            <input class="form-check-input" type="radio" name="fasting" value="Before food" id="bf" checked>
+            <input class="form-check-input" type="radio" name="fasting" value="before" id="bf" checked>
             <label class="form-check-label" for="bf">
                 Before food
             </label>
         </div>
         <br />
         <div class="form-check push">
-            <input class="form-check-input" type="radio" name="fasting" value="After Food" id="af">
+            <input class="form-check-input" type="radio" name="fasting" value="after" id="af">
             <label class="form-check-label" for="af">
                 After food
             </label>
@@ -89,7 +89,7 @@ if ($count == 1) {
 
     </form>
     <?php
-    include('readings_check.php');
+    // include('readings_check.php');
 
 
     ?>

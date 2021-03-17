@@ -113,7 +113,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Profile</a>
+        <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Profile</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -187,27 +187,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 														email='$email',
 														phone='$phone' where userid='$pid';");
         if ($sql) {
-          $msg = "<span class='push text-success'>Profile Updated</span>";
+          $msg = "<span class='text-success'>Profile Updated</span>";
         } else {
-          $msg = "<span class='push text-danger'>Error updating profile</span>";
+          $msg = "<span class='text-danger'>Error updating profile</span>";
         }
       }
     } ?>
     <!-- Dashboard info here-->
-    <div class="col-xl mt-5">
-      <div class="card shadow">
-        <div class="card-header ">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Your Profile</h3>
-            </div>
-          </div>
-        </div>
+    <div class="container-fluid">
+      <div class="card shadow mt-5">
+        <h1 class="card-header ">Your Profile</h1>
         <div class="card-body">
           <div class="row">
-            <div class="col-sm">
-              <form>
-                <h6 class="heading-small text-muted mb-4">Personal Information</h6>
+            <form>
+              <div class="col">
+                <h4 class="text-muted mb-4">Personal Information</h4>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-9">
@@ -230,13 +224,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-            <hr class="my-4" />
+              </div>
+            </form>
             <!-- Address -->
-            <div class="col-sm border-left">
+            <div class="col border-left">
               <form action="" method="POST">
-                <h6 class="heading-small text-muted mb-4">Contact Information</h6>
+                <h4 class="text-muted mb-4">Contact Information</h4>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-9">
@@ -274,19 +267,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="container-fluid">
       <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
-            </div>
-          </div>
+
+      <div class="row align-items-center justify-content-center">
+
+        <div class="text-center text-muted fixed-bottom mb-5">
+          Glucoguide Team
         </div>
-      </footer>
+
+      </div>
+
     </div>
   </div>
 </body>

@@ -97,7 +97,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Previous readings</a>
+        <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Previous readings</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,15 +124,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
 
     <!-- Dashboard info here-->
-    <?php
-    echo "<h1 class=\"p-5\">Your Previous Readings</h1>";
-    $pid = $_SESSION['userid'];
-    include ('../config.php');
-    if (mysqli_connect_error()) {
-      echo "<span class='text-danger'>Unable to connect to database!</span>";
-    } else {
-      echo "<table class=\"table\">
-                <thead>
+    <div class="container-fluid">
+      <div class="row mt-5">
+        <div class="col mb-3">
+          <div class="card shadow">
+            <h1 class="card-header">Your Previous Readings</h1>
+            <div class="card-body" style="overflow-y:hidden;">
+              <?php
+              $pid = $_SESSION['userid'];
+              include('../config.php');
+              if (mysqli_connect_error()) {
+                echo "<span class='text-danger'>Unable to connect to database!</span>";
+              } else {
+                echo "<table class='table table-striped table-hover'>
                   <tr>
                     <th scope=\"col\">Serial No.</th>
                     <th scope=\"col\">Readings</th>
@@ -140,51 +144,57 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <th scope=\"col\">Pricked Value</th>  
                     <th scope=\"col\">Updated On</th>
                   </tr>
-                </thead>
                 <tbody>";
-      $count = 1;
-      $result = mysqli_query($handle, "Select * from patient_reading where patient_id='$pid' order by action_taken desc;");
-      if (mysqli_num_rows($result) == 0) {
-        echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
-      } else {
-        while ($row = mysqli_fetch_array($result)) {
-          echo "<tr>
+                $count = 1;
+                $result = mysqli_query($handle, "Select * from patient_reading where patient_id='$pid' order by action_taken desc;");
+                if (mysqli_num_rows($result) == 0) {
+                  echo "<tr><td colspan = 5 align=center>No records yet !</td></tr>";
+                } else {
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo "<tr>
                     <td>"
-            . $count .
-            "</td>
+                      . $count .
+                      "</td>
                     <th>"
-            . $row[1] .
-            "</th>
+                      . $row['readings'] .
+                      "</th>
                     <th>"
-            . $row[3] .
-            "</th>
+                      . $row['reading_avg'];
+                    if ($row['fasting'] == "before") echo " (F)";
+                    else if ($row['fasting'] == "after") echo " (M)";
+                    echo "</th>
                     <td>";
-          if ($row[4] == 0) echo "Nil";
-          else echo "<b>$row[4]</b>";
-          echo "</td>
+                    if ($row['pricked'] == 0) echo "Nil";
+                    else echo "<b>".$row['pricked']."</b>";
+                    echo "</td>
                     <td>"
-            . $row[5] .
-            "</td>
+                      . $row['action_taken'] .
+                      "</td>
                   </tr>";
-          $count++;
-        }
-      }
-      echo "</tbody></table>";
-    }
-    ?>
+                    $count++;
+                  }
+                }
+                echo "</tbody></table>";
+              }
+              ?>
 
-    <div class="container-fluid">
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
             </div>
           </div>
         </div>
-      </footer>
+      </div>
+
+      <!-- Footer -->
+
+      <div class="row align-items-center justify-content-center">
+
+        <div class="text-center text-muted p-5">
+          Glucoguide Team
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 </body>
 

@@ -79,8 +79,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form>
       <!-- Navigation -->
       <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="#">
+        <li class="nav-item  active">
+          <a class="nav-link  active" href="#">
             <i class="ni ni-tv-2 text-primary"></i> Dashboard
           </a>
         </li>
@@ -109,7 +109,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Dashboard</a>
+        <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Dashboard</a>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -139,10 +139,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="container-fluid">
       <?php
       echo "<h1 class='p-5'> Hello, Dr." . $_SESSION['user'] . "</h1>"; ?>
-      <div class="row mt--4">
-        <div class="col mb-4">
+
+      <div class="row">
+        <div class="col mb-3">
+          <div class="row mb-4">
+            <div class="col">
+              <div class="card shadow">
+                <div class="card-body">
+                  <?php include 'info.php'; ?>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card shadow">
-            <h3 class="card-header">Your Patients</h3>
+            <h1 class="card-header">Your Patients</h1>
             <div class="card-body" style="overflow-y:hidden;">
               <?php
               include('../config.php');
@@ -160,7 +170,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 
                 <tbody>";
                 $count = 1;
-                $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='" . $_SESSION['userid'] . "'");
+                $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='" . $_SESSION['userid'] . "';");
                 if (mysqli_num_rows($patient) == 0) {
                   echo "<tr><td colspan = 5 align=center>No patients yet !</td></tr>";
                 } else {
@@ -179,7 +189,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                       "</td>
                     
                     <td>
-                    <a href='patientinfo.php?patient=$pid&name=$pname'>"."Detailed Report"."</a>
+                    <a href='patientinfo.php?patient=$pid&name=$pname'>" . "Detailed Report" . "</a>
                     </td>
                   </tr>";
                     $count++;
@@ -192,39 +202,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
         <div class="col">
-          <div class="card shadow" >
+          <div class="card shadow">
             <h4 class="card-header">New notifications</h4>
-            <div class="card-body" style="height:520px; overflow-y:scroll;">
+            <div class="card-body" style="height:500px; overflow-y:scroll;">
 
-            <?php include 'display.php'; ?>
+              <?php include 'display.php'; ?>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
 
-      </div>
-    </div>
-    <div class="container-fluid">
+
       <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
-            </div>
-          </div>
+
+      <a href="https://my.saleassist.ai/#/auth/login">
+        <div id="floating-button">
+          <i class="ni ni-chat-round text-white" style="margin-top: 19px; margin-left: 19px;"></i>
         </div>
-      </footer>
+      </a>
+      <div class="row align-items-center justify-content-center">
+        
+          <div class="text-center text-muted p-5">
+            Glucoguide Team
+          </div>
+        
+      </div>
     </div>
+
+
   </div>
-  <a href="https://my.saleassist.ai/#/auth/login">
-    <div id="floating-button">
-
-      <i class="ni ni-chat-round text-white" style="margin-top: 19px; margin-left: 19px;"></i>
-
-    </div>
-  </a>
 </body>
 
 </html>

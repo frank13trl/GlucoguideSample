@@ -137,15 +137,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <div class="row mt--4">
         <div class="col">
           <div class="card shadow">
-            <h5 class="card-header">Use your glucoguide to read your glucose level. Enter each value in the following fields</h5>
+            <h4 class="card-header">Use your glucoguide to read your glucose level. Enter each value in the following fields</h4>
             <div class="card-body">
               <div class="row">
                 <div class="col">
                   <?php
-                  include('readings.php');
+                  include 'readings.php';
                   ?>
                 </div>
                 <div class="col border-left">
+                  <?php
+                  include 'readings_check.php';
+                  ?>
                 </div>
               </div>
             </div>
@@ -155,7 +158,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <div class="row mt-4">
         <div class="col-sm">
           <div class="card shadow">
-            <h5 class="card-header">Talk to your doctor</h5>
+            <h3 class="card-header">Talk to your doctor</h3>
             <div class="card-body">
               <div id="saleassistEmbed" style="height: 500px;"></div>
               <script>
@@ -170,9 +173,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
         <div class="col-sm">
           <div class="card shadow">
-            <h5 class="card-header">Message</h5>
+            <h3 class="card-header">Message</h3>
             <div class="card-body" style="height: 550px;">
-              <form role="form" method="POST" action="send.php" >
+              <form role="form" method="POST" action="send.php">
                 <div class="form-group">
                   <div class="input-group">
                     <textarea class="form-control" id="msg" name="msg"></textarea>
@@ -183,14 +186,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </form>
               <hr>
-              Previous messages<br/>
+              Previous messages<br />
               <?php include 'display.php'; ?>
             </div>
           </div>
         </div>
         <div class="col-sm">
           <div class="card shadow">
-            <h5 class="card-header">Graphical Information</h5>
+            <h3 class="card-header">Graphical Information</h3>
             <div class="card-body">
               <?php
               include('../config.php');
@@ -213,19 +216,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="container-fluid">
       <!-- Footer -->
-      <footer class="footer">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted fixed-bottom mb-5">
-              Glucoguide Team
-            </div>
-          </div>
+
+      <div class="row align-items-center justify-content-center">
+
+        <div class="text-center text-muted p-5">
+          Glucoguide Team
         </div>
-      </footer>
+
+      </div>
+
     </div>
   </div>
 </body>

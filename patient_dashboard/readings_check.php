@@ -52,5 +52,3 @@ if(count($_POST))
 		$handle -> close();
 }
 }
-
-?>
