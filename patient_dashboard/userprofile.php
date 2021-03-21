@@ -61,9 +61,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> -->
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="#">
         <h1 class="text-blue">Glucoguide</h1>
@@ -71,7 +71,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </a>
 
       <!-- Form -->
-      <form class="mt-4 mb-3 d-md-none">
+      <!-- <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
           <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
           <div class="input-group-prepend">
@@ -80,8 +80,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
           </div>
         </div>
-      </form>
+      </form> -->
       <!-- Navigation -->
+      <div class="col-sm-12">
       <ul class="navbar-nav">
         <li class="nav-item  ">
           <a class="nav-link  " href="pat_dashboard.php">
@@ -104,6 +105,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </a>
         </li>
       </ul>
+      </div>
       <!-- Divider -->
       <hr class="my-3">
     </div>

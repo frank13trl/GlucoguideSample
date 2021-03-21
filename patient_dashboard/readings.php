@@ -52,14 +52,14 @@ if ($count == 1) {
 <body>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <br />
-        <div class="form-check push">
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="fasting" value="before" id="bf" checked>
             <label class="form-check-label" for="bf">
                 Before food
             </label>
         </div>
         <br />
-        <div class="form-check push">
+        <div class="form-check">
             <input class="form-check-input" type="radio" name="fasting" value="after" id="af">
             <label class="form-check-label" for="af">
                 After food
@@ -67,8 +67,8 @@ if ($count == 1) {
         </div>
         <table style="margin: 20px;">
             <tr>
-                <td valign=top>
-                    <h3 style="padding: 30px;">Glucoguide readings : </h3>
+                <td valign=bottom style="padding-bottom: 10px;">
+                    <h3>Glucoguide reading : </h3>
                 </td>
                 <td>
                     <div id="newlink">
@@ -79,7 +79,7 @@ if ($count == 1) {
                 </td>
             </tr>
         </table>
-        <p class="push">
+        <p>
             <br>
             <input type='button' id="addnew" class='btn btn-primary' onClick="javascript:add_feed()" style="display:block;" value='Next'>
             <input type="submit" class='btn btn-primary' style="display:none;" id="submit" name="submit1"><br>

@@ -4,7 +4,7 @@
 include ('../config.php');
 
 // fetch data from student table..
-$sql = "SELECT * FROM notification n INNER JOIN login AS l ON n.msg_from = l.userid where msg_to='" . $_SESSION['userid'] . "' order by sent_on desc";
+$sql = "SELECT n.*,l.name,l.userid FROM notification n INNER JOIN login AS l ON n.msg_from = l.userid where msg_to='" . $_SESSION['userid'] . "' order by sent_on desc";
 
 $query = $handle->query($sql);
 if ($query->num_rows  > 0) {

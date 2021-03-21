@@ -43,7 +43,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
     .push {
-      padding-left: 100px;
+      padding-left: 40px;
     }
   </style>
   <script src="https://saleassist-static.s3.ap-south-1.amazonaws.com/widgets/widget.js"></script>
@@ -53,9 +53,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> -->
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="#">
         <h1 class="text-blue">Glucoguide</h1>
@@ -63,7 +63,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </a>
 
       <!-- Form -->
-      <form class="mt-4 mb-3 d-md-none">
+      <!-- <form class="mt-4 mb-3 d-md-none">
         <div class="input-group input-group-rounded input-group-merge">
           <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
           <div class="input-group-prepend">
@@ -72,8 +72,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
           </div>
         </div>
-      </form>
+      </form> -->
       <!-- Navigation -->
+      <div class="col-sm-12">
       <ul class="navbar-nav">
         <li class="nav-item  active ">
           <a class="nav-link  active " href="#">
@@ -96,6 +97,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </a>
         </li>
       </ul>
+      </div>
       <!-- Divider -->
       <hr class="my-3">
     </div>
@@ -140,12 +142,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <h4 class="card-header">Use your glucoguide to read your glucose level. Enter each value in the following fields</h4>
             <div class="card-body">
               <div class="row">
-                <div class="col">
+                <div class="col-sm-6 push">
                   <?php
                   include 'readings.php';
                   ?>
                 </div>
-                <div class="col border-left">
+                <div class="col-sm-6 border-left">
                   <?php
                   include 'readings_check.php';
                   ?>

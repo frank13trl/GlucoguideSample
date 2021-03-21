@@ -96,7 +96,6 @@ if (isset($_POST['reg_user'])) {
                                                                 Select '" . $userid . "',doctor_settings.* from doctor_settings where doctor_id='" . $docid . "';");
       if ($logquery && $pinfquery && $psetquery) {
         $message1 = "Account added successfully. Redirecting to login page";
-        session_start();
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
       } else {
         $message2 = "Could not add login details for patient !";
