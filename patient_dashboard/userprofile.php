@@ -274,7 +274,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
       <div class="row align-items-center justify-content-center">
 
-        <div class="text-center text-muted fixed-bottom mb-5">
+        <div class="text-center text-muted p-5">
           Glucoguide Team
         </div>
 

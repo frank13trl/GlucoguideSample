@@ -87,28 +87,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form> -->
       <!-- Navigation -->
       <div class="col-sm-12">
-      <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="doc_dashboard.php">
-            <i class="ni ni-tv-2 text-primary"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="doctor_settings.php">
-            <i class="ni ni-ui-04 text-red"></i> Settings
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="userprofile.php">
-            <i class="ni ni-single-02 text-yellow"></i> Profile
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="ni ni-key-25 text-info"></i> Logout
-          </a>
-        </li>
-      </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item  active ">
+            <a class="nav-link  active " href="doc_dashboard.php">
+              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="doctor_settings.php">
+              <i class="ni ni-ui-04 text-red"></i> Settings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="userprofile.php">
+              <i class="ni ni-single-02 text-yellow"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../logout.php">
+              <i class="ni ni-key-25 text-info"></i> Logout
+            </a>
+          </li>
+        </ul>
       </div>
       <!-- Divider -->
       <hr class="my-3">
@@ -206,21 +206,34 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
         <div class="col">
-          <div class="card shadow">
-            <h3 class="card-header">
-              <?php
-              echo $_GET['name'];
-              echo "'s Settings";
-              ?>
-            </h3>
-            <div class="card-body" style="overflow-y:hidden;">
-              <?php include('psetchange.php');
-              if (isset($msg)) {
-                echo $msg;
-              }
-              ?>
+
+          <div class="row-md-12 mb-3">
+            <div class="card shadow">
+              <h3 class="card-header">Variation Graph</h3>
+              <div class="card-body">
+                <?php include('chart.php'); ?>
+              </div>
             </div>
           </div>
+
+          <div class="row-md-12">
+            <div class="card shadow">
+              <h3 class="card-header">
+                <?php
+                echo $_GET['name'];
+                echo "'s Settings";
+                ?>
+              </h3>
+              <div class="card-body" style="overflow-y:hidden;">
+                <?php include('psetchange.php');
+                if (isset($msg)) {
+                  echo $msg;
+                }
+                ?>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 

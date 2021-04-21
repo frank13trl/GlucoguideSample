@@ -17,7 +17,6 @@ if (isset($_POST['send'])) {
             $result2 = mysqli_query($handle, $sql2);
             $row2 = mysqli_fetch_assoc($result2);
             $did = $row2["doctor_id"];
-            echo $_POST['msg'];
             $query = mysqli_query($handle, "Insert into notification values (default, '" . $_SESSION['userid'] . "','" . $did . "','" . $_POST["msg"] . "', default, default);");
             if ($query) {
                 echo "<script>

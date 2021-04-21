@@ -28,7 +28,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Dashboard
+    Administrator
   </title>
   <!-- Favicon -->
   <link href="../assets/img/custom/icon.png" rel="icon" type="image/png">
@@ -41,12 +41,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    .push {
-      padding-left: 40px;
-    }
-  </style>
-  <script src="https://saleassist-static.s3.ap-south-1.amazonaws.com/widgets/widget.js"></script>
+
+
 </head>
 
 <body class="" onload='document.getElementById("msg").value="";'>
@@ -75,13 +71,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form> -->
       <!-- Navigation -->
       <div class="col-sm-12">
-      <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="#">
-            <i class="ni ni-tv-2 text-primary"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
+        <ul class="navbar-nav">
+          <li class="nav-item  active ">
+            <a class="nav-link  active " href="#">
+              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            </a>
+          </li>
+          <!-- <li class="nav-item">
           <a class="nav-link " href="prev_reading.php">
             <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
           </a>
@@ -90,13 +86,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           <a class="nav-link " href="userprofile.php">
             <i class="ni ni-single-02 text-yellow"></i> Profile
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="ni ni-key-25 text-info"></i> Logout
-          </a>
-        </li>
-      </ul>
+        </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="../logout.php">
+              <i class="ni ni-key-25 text-info"></i> Logout
+            </a>
+          </li>
+        </ul>
       </div>
       <!-- Divider -->
       <hr class="my-3">
@@ -107,7 +103,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <h1 class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block">Dashboard</h1>
+        <h1 class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block">Administrator Dashboard</h1>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -116,7 +112,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                   <img alt="Image placeholder" src="../assets/img/custom/profile.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['user']; ?></span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo "Admin"; ?></span>
                 </div>
               </div>
             </a>
@@ -135,24 +131,46 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <!-- Dashboard info here-->
     <div class="container-fluid">
-      <?php echo "<h1 class=\"p-5\"> Hello, " . $_SESSION['user'] . "</h1>"; ?>
-      <div>
-        <?php include 'alert.php'?>
-      </div>
-      <div class="row mt--4">
-        <div class="col">
+      <div class="row mt-5">
+        <div class="col mb-3">
           <div class="card shadow">
-            <h4 class="card-header">Use your glucoguide to read your glucose level. Enter each value in the following fields</h4>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-6 push">
+            <h1 class="card-header">Users</h1>
+            <div class="card-body" style="overflow-y:hidden;">
+              <form method="POST">
+                <div class="form-group" id="userid" style="display: inline-block; width:30%;">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-check-bold"></i></span>
+                    </div>
+                    <select class="form-control" name="userid">
+                      <option disabled selected>Select user</option>
+                      <?php
+                      require('user_option.php');
+                      ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-center" style="display: inline-block; margin-left: 30px;">
+                  <button type="submit" name="get_inf" class="btn btn-primary">Get Details</button>
+                </div>
+              </form>
+              <hr>
+              <div class="row" style="min-height: 300px;">
+                <div class="col-md-4">
                   <?php
-                  include 'readings.php';
+                  require('info.php');
                   ?>
                 </div>
-                <div class="col-sm-6 border-left">
+                <div class="col">
                   <?php
-                  include 'readings_check.php';
+                  if (isset($_POST['userid'])) {
+                    include('../config.php');
+                    $result = mysqli_query($handle, "SELECT * FROM patient_reading where patient_id='" . $_POST['userid'] . "';");
+                    if (mysqli_num_rows($result) > 0)
+                      require('chart.php');
+                    else
+                      echo "<div class='text-center mt-8'><i>No records to display</i></div>";
+                  }
                   ?>
                 </div>
               </div>
@@ -160,68 +178,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col">
-          <div class="card shadow">
-            <h3 class="card-header">Talk to your doctor</h3>
-            <div class="card-body">
-              <div id="saleassistEmbed" style="height: 500px;"></div>
-              <script>
-                EmbeddableWidget.mount({
-                  source_key: "11149d07-5e09-4522-ab95-584632295356",
-                  parentElementId: "saleassistEmbed",
-                  form_factor: "embed"
-                });
-              </script>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow">
-            <h3 class="card-header">Message</h3>
-            <div class="card-body" style="height: 550px;">
-              <form role="form" method="POST" action="send.php">
-                <div class="form-group">
-                  <div class="input-group">
-                    <textarea class="form-control" id="msg" name="msg"></textarea>
-                  </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-4" name="send">Send message</button>
-                  </div>
-                </div>
-              </form>
-              <hr>
-              Previous messages<br />
-              <?php include 'display.php'; ?>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow">
-            <h3 class="card-header">Graphical Information</h3>
-            <div class="card-body">
-              <?php
-              include('../config.php');
-              if (mysqli_connect_error()) {
-                echo "<span class='text-danger'>Unable to connect to database!</span>";
-              } else {
-
-                $result = mysqli_query($handle, "SELECT * FROM patient_reading where patient_id='$pid'");
-                if (mysqli_num_rows($result) == 0) {
-                  echo "<h3 style=text-align:center; class='text-danger'>No readings to show graph</h3>";
-                  echo "</div>";
-                } else {
-                  echo "<div>";
-                  include('chart.php');
-                  echo "</div>";
-                }
-              }
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Footer -->
 
       <div class="row align-items-center justify-content-center">

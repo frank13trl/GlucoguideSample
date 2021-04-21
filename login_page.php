@@ -1,12 +1,16 @@
 <?php
 session_start();
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["category"] === "Patient") {
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   if ($_SESSION["category"] === "Patient") {
     header("Location: ./patient_dashboard/pat_dashboard.php");
     exit();
   }
   if ($_SESSION["category"] === "Doctor") {
     header("Location: ./doctor_dashboard/doc_dashboard.php");
+    exit();
+  }
+  if ($_SESSION["category"] === "admin") {
+    header("Location: ./admin/admin_dashboard.php");
     exit();
   }
 }
