@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="./assets/img/custom/icon.png" rel="icon" type="image/png">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Open", sans-serif}
+.w3-bar,h1,button {font-family: "Open", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-card w3-left-align w3-large" style="background-color:#172b4d;">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large " href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu" style="background-color:#172b4d;"><i class="fa fa-bars"></i></a>
+    <!-- <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">About</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Contact</a> -->
+    <a href="login_page.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Login</a>
+    <a href="register_page.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Sign Up</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="login_page.php" class="w3-bar-item w3-button w3-padding-large">Login</a>
+    <a href="register_page.php" class="w3-bar-item w3-button w3-padding-large">Sign Up</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-center" style="padding:128px 16px; background-image: linear-gradient(to right, #5e72e4 , #8965e0); ">
+  <b class="w3-margin w3-jumbo w3-text-white">Glucoguide</b>
+  <p class="w3-xlarge w3-text-white">Healthcare for You</p>
+  <a href="login_page.php"><button class="w3-button w3-light-grey w3-padding-large w3-large w3-margin-top">Sign In</button></a>
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1><b>About Glucoguide</b></h1>
+      <h4 class="w3-padding-32">Glucoguide is the device we developed to ensure the health of diabetic patients in a more healthier and safer way. It uses 
+      non-evasive methods to measue the glucose level in blood. It means that you don't have to prick anymore!<br/>
+      
+      <br/>This website uses the Glucoguide device to assess the patients' health and provide them with help and 
+      support to live healthier lives. This website bring together the patients and doctors where they can communicate with each other.</h4>
+
+      <p class="w3-text-grey">We believe you deserve superior healthcare and an excellent patient experience, and we are committed to living our values. 
+      We believe you deserve to be treated with compassion and respect. We believe that communication with our patients and members should be timely, open and honest. 
+      And we believe you deserve affordable, coordinated, high-quality care and services that are easy to find and simple to use. It's what we do best.</p>
+    </div>
+
+    <!-- <div class="w3-third w3-center">
+      <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
+    </div> -->
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">
+ <p style="font-size: 20px">Glucoguide Team</p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,84 +1,181 @@
+<!--
+=========================================================
+* Argon Design System - v1.2.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-design-system
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-<title>Home</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="./assets/img/custom/icon.png" rel="icon" type="image/png">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Open", sans-serif}
-.w3-bar,h1,button {font-family: "Open", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
-</style>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets_index/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/custom/icon.png">
+  <title>
+    Glucoguide - Home
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="./assets_index/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets_index/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link href="./assets_index/css/font-awesome.css" rel="stylesheet" />
+  <link href="./assets_index/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="./assets_index/css/argon-design-system.css?v=1.2.2" rel="stylesheet" />
 </head>
-<body>
 
-<!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-card w3-left-align w3-large" style="background-color:#172b4d;">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large " href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu" style="background-color:#172b4d;"><i class="fa fa-bars"></i></a>
-    <!-- <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">About</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Contact</a> -->
-    <a href="login_page.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Login</a>
-    <a href="register_page.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Sign Up</a>
-  </div>
-
-  <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="login_page.php" class="w3-bar-item w3-button w3-padding-large">Login</a>
-    <a href="register_page.php" class="w3-bar-item w3-button w3-padding-large">Sign Up</a>
-  </div>
-</div>
-
-<!-- Header -->
-<header class="w3-container w3-center" style="padding:128px 16px; background-image: linear-gradient(to right, #5e72e4 , #8965e0); ">
-  <b class="w3-margin w3-jumbo w3-text-white">Glucoguide</b>
-  <p class="w3-xlarge w3-text-white">Healthcare for You</p>
-  <a href="login_page.php"><button class="w3-button w3-light-grey w3-padding-large w3-large w3-margin-top">Sign In</button></a>
-</header>
-
-<!-- First Grid -->
-<div class="w3-row-padding w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="w3-twothird">
-      <h1><b>About Glucoguide</b></h1>
-      <h4 class="w3-padding-32">Glucoguide is the device we developed to ensure the health of diabetic patients in a more healthier and safer way. It uses 
-      non-evasive methods to measue the glucose level in blood. It means that you don't have to prick anymore!<br/>
-      
-      <br/>This website uses the Glucoguide device to assess the patients' health and provide them with help and 
-      support to live healthier lives. This website bring together the patients and doctors where they can communicate with each other.</h4>
-
-      <p class="w3-text-grey">We believe you deserve superior healthcare and an excellent patient experience, and we are committed to living our values. 
-      We believe you deserve to be treated with compassion and respect. We believe that communication with our patients and members should be timely, open and honest. 
-      And we believe you deserve affordable, coordinated, high-quality care and services that are easy to find and simple to use. It's what we do best.</p>
+<body class="index-page">
+  <!-- Navbar -->
+  <nav id="navbar-main"
+    class="navbar navbar-main navbar-expand-lg bg-white navbar-light position-sticky top-0 shadow py-2">
+    <div class="container">
+      <a class="navbar-brand mr-lg-5" href="./index.html">
+        <h3 class="display-4 text-primary text-capitalize">Glucoguide</h3>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global"
+        aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbar_global">
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a href="./index.html">
+                <h4 class="disaply-3 text-primary text-capitalize">Glucoguide</h4>
+              </a>
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global"
+                aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="login_page.php">
+              <i class="ni ni-key-25"></i>
+              <span class="nav-link-inner--text">Login</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register_page.php">
+              <i class="ni ni-circle-08"></i>
+              <span class="nav-link-inner--text">Register</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="wrapper">
+    <div class="section section-hero section-shaped">
+      <div class="shape shape-style-1 shape-primary">
+        <span class="span-150"></span>
+        <span class="span-50"></span>
+        <span class="span-50"></span>
+        <span class="span-75"></span>
+        <span class="span-100"></span>
+        <span class="span-75"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+      </div>
+      <div class="page-header">
+        <div class="container shape-container d-flex align-items-center py-lg">
+          <div class="col px-0">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 text-center">
+                <h1 class="display-1 text-white">Glucoguide</h1>
+                <p class="lead text-white">Healthcare for You. Healthcare for World</p>
+                <div class="btn-wrapper mt-5">
+                  <a href="login_page.php" class="btn btn-lg btn-white btn-icon mb-3 mb-sm-0">
+                    <span class="btn-inner--icon"><i class="ni ni-like-2"></i></span>
+                    <span class="btn-inner--text">Already a member</span>
+                  </a>
+                  <a href="register_page.php" class="btn btn-lg btn-github btn-icon mb-3 mb-sm-0">
+                    <span class="btn-inner--icon"><i class="ni ni-spaceship"></i></span>
+                    <span class="btn-inner--text">Join now</span>
+                  </a>
+                </div>
+                <div class="mt-5">
+                  <small class="font-weight-bold mb-0 mr-2 text-white">Join with your unique ID</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+          xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
     </div>
 
-    <!-- <div class="w3-third w3-center">
-      <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
-    </div> -->
+    <footer class="footer has-cards">
+      <div class="container">
+        <div class="row row-grid align-items-center my-md">
+          <div class="col-lg-12">
+            <h3 class="display-3 font-weight-bold mb-5 mt--8">What is Glucoguide?</h3>
+            <h3 class="text-primary font-weight-light mb-5">Glucoguide is the device we developed to ensure the health
+              of diabetic patients in a more healthier and safer way. It uses
+              non-evasive methods to measue the glucose level in blood. It means that <b>you don't have to prick anymore!</b>
+            </h3>
+            <h4 class="mb-0 font-weight-light">This website uses the Glucoguide device to assess the patients' health
+              and provide them with help and
+              support to live healthier lives. This website bring together the patients and doctors where they can
+              communicate with each other.<br /><br />
+              We believe you deserve superior healthcare and an excellent patient experience, and we are committed to
+              living our values.
+              We believe you deserve to be treated with compassion and respect. We believe that communication with our
+              patients and members should be timely, open and honest.
+              And we believe you deserve affordable, coordinated, high-quality care and services that are easy to find
+              and simple to use. It's what we do best.</h4>
+          </div>
+        </div>
+        <hr>
+        <div class="row align-items-center justify-content-md-between">
+          <div class="col-md-6">
+            <div>
+              Glucoguide Team
+            </div>
+          </div>
+          <div class="col-md-6">
+            <ul class="nav nav-footer justify-content-end">
+              <li class="nav-item">
+                <a href="login_pge.php" class="nav-link">Login</a>
+              </li>
+              <li class="nav-item">
+                <a href="register_page.php" class="nav-link">Register</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
-</div>
-
-<!-- Footer -->
-<footer class="w3-container w3-padding-64 w3-center w3-opacity">
- <p style="font-size: 20px">Glucoguide Team</p>
-</footer>
-
-<script>
-// Used to toggle the menu on small screens when clicking on the menu button
-function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-</script>
-
+  <!--   Core JS Files   -->
+  <script src="./assets_index/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="./assets_index/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="./assets_index/js/core/bootstrap.min.js" type="text/javascript"></script>
+  <script src="./assets_index/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 </body>
+
 </html>

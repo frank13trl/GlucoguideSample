@@ -118,7 +118,7 @@ if (isset($_POST['login'])) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
       if ($userid == "Admin" && $password == "123456") {
-        echo "<script>window.location.replace('./admin/admin_dashboard.php')</script>";
+        echo "<script>window.location.replace('./admin_dashboard/admin_dashboard.php')</script>";
         $_SESSION["loggedin"] = true;
         $_SESSION["category"] = 'admin';
       }

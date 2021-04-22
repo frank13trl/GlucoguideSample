@@ -10,7 +10,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     exit();
   }
   if ($_SESSION["category"] === "admin") {
-    header("Location: ./admin/admin_dashboard.php");
+    header("Location: ./admin_dashboard/admin_dashboard.php");
     exit();
   }
 }
