@@ -79,28 +79,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form> -->
       <!-- Navigation -->
       <div class="col-sm-12">
-      <ul class="navbar-nav">
-        <li class="nav-item  active">
-          <a class="nav-link  active" href="#">
-            <i class="ni ni-tv-2 text-primary"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="doctor_settings.php">
-            <i class="ni ni-ui-04 text-red"></i> Settings
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="userprofile.php">
-            <i class="ni ni-single-02 text-yellow"></i> Profile
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="ni ni-key-25 text-info"></i> Logout
-          </a>
-        </li>
-      </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item  active">
+            <a class="nav-link  active" href="#">
+              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="doctor_settings.php">
+              <i class="ni ni-ui-04 text-red"></i> Settings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="userprofile.php">
+              <i class="ni ni-single-02 text-yellow"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../logout.php">
+              <i class="ni ni-key-25 text-info"></i> Logout
+            </a>
+          </li>
+        </ul>
       </div>
       <!-- Divider -->
       <hr class="my-3">
@@ -124,6 +124,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </div>
             </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="userprofile.php" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="doctor_settings.php" class="dropdown-item">
+                <i class="ni ni-settings-gear-65"></i>
+                <span>Settings</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../logout.php" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
@@ -161,15 +179,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               if (mysqli_connect_error()) {
                 echo "<span class='text-danger'>Unable to connect to database!</span>";
               } else {
-                echo "<table class='table table-striped table-hover'>
+                echo "<table class='table table-striped table-hover' id='table'><thead>
                 
                   <tr>
                     <th>Serial No.</th>
                     <th>Name of Patient</th>
                     <th>Patient ID</th>
-                    <th>Report</th>
+                    <td>Report</td>
                   </tr>
-                
+                  </thead>
                 <tbody>";
                 $count = 1;
                 $patient = mysqli_query($handle, "SELECT * FROM patient_info i INNER JOIN casefile AS c ON i.userid = c.patient_id WHERE c.doctor_id='" . $_SESSION['userid'] . "';");
@@ -180,16 +198,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     $pid = $plist['userid'];
                     $pname = $plist['name'];
                     echo "<tr>
-                    <td>"
-                      . $count .
-                      "</td>
-                    <th>"
-                      . $plist['name'] .
-                      "</th>
-                    <td>"
-                      . $plist['userid'] .
-                      "</td>
-                    
+                    <td>". $count ."</td>
+                    <td>". $plist['name'] ."</td>
+                    <td>". $plist['userid'] ."</td>
                     <td>
                     <a href='patientinfo.php?patient=$pid&name=$pname'>" . "Detailed Report" . "</a>
                     </td>
@@ -223,16 +234,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
       </a>
       <div class="row align-items-center justify-content-center">
-        
-          <div class="text-center text-muted p-5">
-            Glucoguide Team
-          </div>
-        
+
+        <div class="text-center text-muted p-5">
+          Glucoguide Team
+        </div>
+
       </div>
     </div>
 
 
   </div>
+  <!--   Core   -->
+  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/filter/dist/excel-bootstrap-table-filter-bundle.js"></script>
+  <link rel="stylesheet" href="../assets/filter/dist/excel-bootstrap-table-filter-style.css">
+  <script>
+    $('#table').excelTableFilter();
+  </script>
 </body>
 
 </html>

@@ -45,6 +45,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     .push {
       padding-left: 40px;
     }
+
+    #status {
+      animation: fadeOut 2s forwards;
+      animation-delay: 3s;
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
   </style>
   <script src="https://saleassist-static.s3.ap-south-1.amazonaws.com/widgets/widget.js"></script>
 </head>
@@ -75,28 +90,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </form> -->
       <!-- Navigation -->
       <div class="col-sm-12">
-      <ul class="navbar-nav">
-        <li class="nav-item  active ">
-          <a class="nav-link  active " href="#">
-            <i class="ni ni-tv-2 text-primary"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="prev_reading.php">
-            <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="userprofile.php">
-            <i class="ni ni-single-02 text-yellow"></i> Profile
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="ni ni-key-25 text-info"></i> Logout
-          </a>
-        </li>
-      </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item  active ">
+            <a class="nav-link  active " href="#">
+              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="prev_reading.php">
+              <i class="ni ni-bullet-list-67 text-red"></i> Previous Readings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="userprofile.php">
+              <i class="ni ni-single-02 text-yellow"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../logout.php">
+              <i class="ni ni-key-25 text-info"></i> Logout
+            </a>
+          </li>
+        </ul>
       </div>
       <!-- Divider -->
       <hr class="my-3">
@@ -120,6 +135,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </div>
             </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="userprofile.php" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="prev_reading.php" class="dropdown-item">
+                <i class="ni ni-calendar-grid-58"></i>
+                <span>Activity</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../logout.php" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
@@ -137,7 +170,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="container-fluid">
       <?php echo "<h1 class=\"p-5\"> Hello, " . $_SESSION['user'] . "</h1>"; ?>
       <div>
-        <?php include 'alert.php'?>
+        <?php include 'alert.php' ?>
       </div>
       <div class="row mt--4">
         <div class="col">
@@ -234,6 +267,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     </div>
   </div>
+  <!--   Core   -->
+  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="../assets/filter/dist/excel-bootstrap-table-filter-bundle.js"></script>
+  <link rel="stylesheet" href="../assets/filter/dist/excel-bootstrap-table-filter-style.css">
 </body>
 
 </html>

@@ -116,6 +116,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </div>
             </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Administrator</h6>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="../logout.php" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
@@ -134,7 +144,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <div class="row mt-5">
         <div class="col mb-3">
           <div class="card shadow">
-            <h1 class="card-header">Users</h1>
+            <h1 class="card-header">User statistics</h1>
             <div class="card-body" style="overflow-y:hidden;">
               <form method="POST">
                 <div class="form-group" id="userid" style="display: inline-block; width:30%;">
@@ -155,25 +165,40 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </form>
               <hr>
+
               <div class="row" style="min-height: 300px;">
-                <div class="col-md-4">
-                  <?php
-                  require('info.php');
-                  ?>
+                <div class="col">
+                  <div class="row">
+                    <?php
+                    require('info.php');
+                    ?>
+                  </div>
+                  <div class="row-md-12">
+                    <?php
+                    if (isset($_POST['userid'])) {
+                      include('../config.php');
+                      $result = mysqli_query($handle, "SELECT * FROM patient_reading where patient_id='" . $_POST['userid'] . "';");
+                      if (mysqli_num_rows($result) > 0)
+                        require('chart.php');
+                      else
+                        echo "<div class='text-center mt-8'><i>No records to display</i></div>";
+                    }
+                    ?>
+                  </div>
                 </div>
                 <div class="col">
-                  <?php
-                  if (isset($_POST['userid'])) {
-                    include('../config.php');
-                    $result = mysqli_query($handle, "SELECT * FROM patient_reading where patient_id='" . $_POST['userid'] . "';");
-                    if (mysqli_num_rows($result) > 0)
-                      require('chart.php');
-                    else
-                      echo "<div class='text-center mt-8'><i>No records to display</i></div>";
-                  }
-                  ?>
+                  <div class="card shadow">
+                    <h1 class="card-header">Stats</h1>
+                    <div class="card-body" style="overflow-y:hidden;">
+                      <?php
+                      require('accuracy.php');
+                      ?>
+                    </div>
+                  </div>
+
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -190,6 +215,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     </div>
   </div>
+  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

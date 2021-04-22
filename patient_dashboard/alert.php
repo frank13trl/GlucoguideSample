@@ -22,15 +22,15 @@ if (mysqli_connect_error()) {
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_row($result);
     array_push($values, $row[2]);
-    if (($values[1] > $values[3]) && ($values[0] >= $values[1])) {
+    if (($values[1] > $values[3]) && ($values[0] > $values[3])) {
       $flag = 3;
-      if(($values[2] > $values[3]) && ($values[1] >= $values[2] && $values[0] >= $values[1]))
+      if (($values[2] > $values[3]) && ($values[1] >= $values[2] && $values[0] >= $values[1]))
         $flag = 1;
     }
     array_push($values, $row[3]);
-    if (($values[1] < $values[4]) && ($values[0] <= $values[1])) {
+    if (($values[1] < $values[4]) && ($values[0] < $values[4])) {
       $flag = 3;
-      if(($values[2] < $values[4]) && ($values[1] <= $values[2] && $values[0] <= $values[1]))
+      if (($values[2] < $values[4]) && ($values[1] <= $values[2] && $values[0] <= $values[1]))
         $flag = 2;
     }
   }
@@ -43,50 +43,29 @@ if (mysqli_connect_error()) {
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    .alert {
-      padding: 20px;
-      background-color: #f44336;
-      color: white;
-    }
-
-    .warn {
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 7px;
-      background-color: #ffbf00;
-      color: white;
-    }
-
-    .closebtn {
-      margin-left: 15px;
-      color: white;
-      font-weight: bold;
-      float: right;
-      font-size: 22px;
-      line-height: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .closebtn:hover {
-      color: black;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="alert" id="halert" style="display: none;">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Alert! </strong>Your glucose levels have been rising abnormally. Consult your doctor
+  <div class="alert alert-danger alert-dismissible fade show" id="halert" style="display: none;">
+    <span class="alert-icon"><b>!</b></span>
+    <span class="alert-text"><strong>Alert! </strong>Your glucose levels have been <b>rising</b> abnormally. Consult your doctor
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
   </div>
-  <div class="alert" id="lalert" style="display: none;">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Alert! </strong>Your glucose levels have been falling abnormally. Consult your doctor
+  <div class="alert alert-danger alert-dismissible fade show" id="lalert" style="display: none;">
+    <span class="alert-icon"><b>!</b></span>
+    <span class="alert-text"><strong>Alert! </strong>Your glucose levels have been <b>falling</b> abnormally. Consult your doctor
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
   </div>
-  <div class="warn" id="warn" style="display: none;">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Oops! </strong>Your glucose levels were abormal recently
+  <div class="alert alert-warning alert-dismissible fade show" id="warn" style="display: none;">
+    <span class="alert-icon"><i class="ni ni-sound-wave"></i></span>
+    <span class="alert-text"><strong>Oops! </strong>Your glucose levels were abormal recently
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
   </div>
   <?php
   echo $flag;

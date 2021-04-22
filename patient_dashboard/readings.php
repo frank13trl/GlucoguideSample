@@ -37,7 +37,7 @@ if ($count == 1) {
 
             if (x == 0) {
                 document.getElementById("addnew").style.display = "none";
-                document.getElementById("submit").style.display = "block";
+                document.getElementById("submit").style.display = "inline";
             }
         }
     </script>
@@ -50,22 +50,19 @@ if ($count == 1) {
 </head>
 
 <body>
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="text-center">
         <br />
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="fasting" value="before" id="bf" checked>
-            <label class="form-check-label" for="bf">
-                Before food
-            </label>
+        
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="bf" name="fasting" value="before" checked>
+            <label class="custom-control-label" for="bf">Before food</label>
         </div>
-        <br />
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="fasting" value="after" id="af">
-            <label class="form-check-label" for="af">
-                After food
-            </label>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio"  class="custom-control-input" id="af" name="fasting" value="after">
+            <label class="custom-control-label" for="af">After food</label>
         </div>
-        <table style="margin: 20px;">
+
+        <table style="margin: 30px;">
             <tr>
                 <td valign=bottom style="padding-bottom: 10px;">
                     <h3>Glucoguide reading : </h3>
@@ -81,9 +78,10 @@ if ($count == 1) {
         </table>
         <p>
             <br>
-            <input type='button' id="addnew" class='btn btn-primary' onClick="javascript:add_feed()" style="display:block;" value='Next'>
-            <input type="submit" class='btn btn-primary' style="display:none;" id="submit" name="submit1"><br>
-            <input type="reset" class='btn btn-warning' name="reset1"><br>
+            <input type="reset" class='btn btn-warning'>
+            <input type="button" class='btn btn-primary' id="addnew" onClick="javascript:add_feed()" value='Next'>
+            <input type="submit" class='btn btn-success' id="submit" style="display:none;">
+
 
         </p>
 

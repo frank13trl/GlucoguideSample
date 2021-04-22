@@ -132,6 +132,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
               </div>
             </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="userprofile.php" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="doctor_settings.php" class="dropdown-item">
+                <i class="ni ni-settings-gear-65"></i>
+                <span>Settings</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="../logout.php" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </a>
+            </div>
           </li>
         </ul>
       </div>
@@ -156,21 +174,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               $_SESSION['name'] = $_GET['name'];
               echo $_GET['name'];
               echo "'s Report"; ?>
+              <input type='button' class='btn btn-default' value='Download Report' id='dwnld' style="float:right;">
             </h1>
-            <div class="card-body" style="overflow-y:hidden;">
+            
+            <div class="card-body">
 
               <?php
               include('../config.php');
               if (mysqli_connect_error()) {
                 echo "<span class='text-danger'>Unable to connect to database!</span>";
               } else {
-                echo "<table class='table table-striped table-hover'>
-                  <tr>
+                echo "<table class='table table-striped table-hover' id='table'><thead>
+                  <tr class='noExl'>
                     <th>Serial No.</th>
                     <th>Average Value</th>
                     <th>Pricked Value</th>
                     <th>Updated On</th>
                   </tr>
+                  </thead>
                 <tbody>";
                 $count = 1;
                 $list = mysqli_query($handle, "Select * from patient_reading where patient_id='" . $_GET['patient'] . "' order by action_taken desc;");
@@ -179,21 +200,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 } else {
                   while ($info = mysqli_fetch_array($list)) {
                     echo "<tr>
-                  <td>"
-                      . $count .
-                      "</td>
-             <th>"
-                      . $info['reading_avg'];
+
+                  <td>" . $count . "</td>
+
+                  <td>" . $info['reading_avg'];
                     if ($info['fasting'] == "before") echo " (F)";
                     else if ($info['fasting'] == "after") echo " (M)";
-                    echo "</th>
-             <td>";
+                    echo "</td>
+
+                  <td>";
                     if ($info['pricked'] == 0) echo "Nil";
                     else echo "<b>" . $info['pricked'] . "</b>";
                     echo "</td>
-                  <td>"
-                      . $info['action_taken'] .
-                      "</td>
+
+                  <td>" . $info['action_taken'] . "</td>
                 </tr>";
                     $count++;
                   }
@@ -212,6 +232,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               <h3 class="card-header">Variation Graph</h3>
               <div class="card-body">
                 <?php include('chart.php'); ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="row-md-12 mb-3">
+            <div class="card shadow">
+              <h3 class="card-header">Statistics</h3>
+              <div class="card-body">
+                <?php include('stats.php'); ?>
               </div>
             </div>
           </div>
@@ -248,6 +277,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </div>
     </div>
   </div>
+  <!--   Core   -->
+  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="../assets/filter/dist/excel-bootstrap-table-filter-bundle.js"></script>
+  <link rel="stylesheet" href="../assets/filter/dist/excel-bootstrap-table-filter-style.css">
+  <script>
+    $('#table').excelTableFilter();
+  </script>
+
+  <script src="../assets/export/dist/jquery.table2excel.js"></script>
+  <script>
+    $("#dwnld").click(function() {
+      $("#table").table2excel({
+        // exclude CSS class
+        exclude: ".noExl",
+        name: "Sheet1",
+        filename: "<?php echo $_GET['patient'] ?> Report", //do not include extension
+        fileext: ".xls" // file extension
+      });
+    });
+  </script>
 </body>
 
 </html>

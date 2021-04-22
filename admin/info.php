@@ -7,29 +7,11 @@ if (mysqli_connect_error()) {
     if (isset($_POST['userid'])) {
         $result = mysqli_query($handle, "Select p.userid,p.name,p.phone,c.doctor_id from patient_info p JOIN casefile c ON p.userid=c.patient_id WHERE p.userid='" . $_POST['userid'] . "';");
         $row = mysqli_fetch_array($result);
-        echo "<table class='table table-striped table-hover'>
-                  <tr>
-                    
-                    <th scope=\"col\">Patient ID</th>
-                    <td>" . $row[0] . "</td>
-                  </tr>
-                  <tr>
-                    
-                    
-                    <th scope=\"col\">Patient Name</th>
-                    <td>" . $row[1] . "</td>
-                  </tr>
-                  <tr>
-                    
-                    
-                    <th scope=\"col\">Doctor ID</th>
-                    <td>" . $row[3] . "</td>
-                  </tr>
-                  <tr>
-                    
-                    <th scope=\"col\">Contact</th>
-                    <td>" . $row[2] . "</td>
-                  </tr>";
+        echo "<table class='table table-hover'>
+                  <tr><td>Patient ID</td><th>" . $row[0] . "</th></tr>
+                  <tr><td>Patient Name</td><th>" . $row[1] . "</th></tr>
+                  <tr><td>Doctor ID</td><th>" . $row[3] . "</th></tr>
+                  <tr><td>Contact</td><th>" . $row[2] . "</th></tr>";
     }
     echo "</tbody></table>";
 }

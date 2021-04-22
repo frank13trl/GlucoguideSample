@@ -44,8 +44,11 @@ if(count($_POST))
 		VALUES ('$pid','$readings_string','$fasting','$avg','$prick',DEFAULT)";
 
 			if ($handle->query($sql) === TRUE) {
-				echo "<span class=' text-success'>Your readings are updated successfully</span>";
-		} 			
+				echo "<span class=' text-success' id='status'>Your readings are updated successfully</span>";
+				echo "<script>document.getElementById('halert').style.display = 'none';</script>";
+				echo "<script>document.getElementById('lalert').style.display = 'none';</script>";
+				echo "<script>document.getElementById('warn').style.display = 'none';</script>";
+		} 		
 		else {
 		echo "Error: " . $sql . "<br>" . $handle->error;
 		}
