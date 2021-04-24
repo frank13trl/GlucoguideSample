@@ -1,17 +1,19 @@
 <?php
 $nameErr = $useridErr = $emailErr = $passErr = $pass2Err = $emailErr = $phoneErr = $cityErr = $categoryErr = $selectErr = "";
-$username = $userid = $password = $email = $city = $phone = $category = $docid = $hospital = $desc = $message1 = $message2 = $loginErr = NULL;
+$username = $userid = $password = $email = $city = $phone = $category = $docid = $hospital = $desc = $message1 = $message2 = $loginErr = "";
+
+//Registration validation
 
 if (isset($_POST['reg_user'])) {
 
-
-
   include('config.php');
+
   if (empty($_POST["username"])) {
     $nameErr = "Name is required";
   } else {
     $username = $_POST["username"];
   }
+
   if (empty($_POST["userid"])) {
     $useridErr = "User ID is required";
   } else {
@@ -35,12 +37,12 @@ if (isset($_POST['reg_user'])) {
     $password = $_POST["password"];
   }
 
-
   if (empty($_POST["email"])) {
     $emailErr = "Email is required";
   } else {
     $email = $_POST["email"];
   }
+
   if (empty($_POST["phone"])) {
     $phoneErr = "Phone number is required";
   } else {
@@ -52,10 +54,12 @@ if (isset($_POST['reg_user'])) {
   } else {
     $city = $_POST["city"];
   }
+
   if (empty($_POST["category"])) {
     $categoryErr = "Select a category";
   } else {
     $category = $_POST["category"];
+
     if ($category == "Doctor") {
       if (!empty($_POST["description"])) {
         $desc = $_POST["description"];
@@ -70,6 +74,7 @@ if (isset($_POST['reg_user'])) {
       }
     }
   }
+
   if ($category == "Patient") {
     if (empty($_POST["docid"])) {
       $selectErr = "Select your doctor";
@@ -87,9 +92,10 @@ if (isset($_POST['reg_user'])) {
         $message1 = "Account added successfully. Redirecting to login page";
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
       } else {
-        $message2 = "Could not add login details for doctor !";
+        $message2 = "Could not add login details for doctor!";
       }
     }
+
     if ($category == "Patient") {
       $pinfquery = mysqli_query($handle, "Insert into patient_info values(DEFAULT,'" . $userid . "','" . $username . "','" . $email . "','" . $phone . "','" . $city . "');");
       $psetquery = mysqli_query($handle, "Insert into casefile (patient_id,doctor_id,default_testcount,lower_normal,upper_normal) 
@@ -98,21 +104,26 @@ if (isset($_POST['reg_user'])) {
         $message1 = "Account added successfully. Redirecting to login page";
         echo "<script>setTimeout(\"location.href = 'login_page.php';\",3000);</script>";
       } else {
-        $message2 = "Could not add login details for patient !";
+        $message2 = "Could not add login details for patient!";
       }
     }
   }
+
+  unset($_POST['reg_user']);
   mysqli_close($handle);
 }
 
+//Login validation
+
 if (isset($_POST['login'])) {
+
   include('config.php');
+
   if (empty($_POST["uid"]) || empty($_POST["pwd"])) {
     $loginErr = "User ID and Password is required";
   } else {
     $userid = $_POST['uid'];
     $password = $_POST['pwd'];
-    // $remember = $_POST['remember'];
 
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
@@ -144,5 +155,6 @@ if (isset($_POST['login'])) {
       }
     }
   }
+
   mysqli_close($handle);
 }

@@ -1,5 +1,7 @@
 <?php
+
 include('../config.php');
+
 $pid = $_SESSION['userid'];
 $values = array();
 $flag = 0;
@@ -19,8 +21,10 @@ if (mysqli_connect_error()) {
         array_push($values, $row[1]);
       }
     }
+
     mysqli_data_seek($result, 0);
     $row = mysqli_fetch_row($result);
+    
     array_push($values, $row[2]);
     if (($values[1] > $values[3]) && ($values[0] > $values[3])) {
       $flag = 3;

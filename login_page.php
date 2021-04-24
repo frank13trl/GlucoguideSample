@@ -1,6 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+  if ($_SESSION["category"] === "admin") {
+    header("Location: ./admin_dashboard/admin_dashboard.php");
+    exit();
+  }
   if ($_SESSION["category"] === "Patient") {
     header("Location: ./patient_dashboard/pat_dashboard.php");
     exit();
@@ -9,34 +13,25 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header("Location: ./doctor_dashboard/doc_dashboard.php");
     exit();
   }
-  if ($_SESSION["category"] === "admin") {
-    header("Location: ./admin_dashboard/admin_dashboard.php");
-    exit();
-  }
 }
 
 ?>
 <!--
-
 =========================================================
 * Argon Dashboard - v1.1.2
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/argon-dashboard
 * Copyright 2020 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
     Login
@@ -53,9 +48,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   <style>
     .error {
       font-size: 14px;
-      padding: 5px;
+      padding: 8px;
       color: #a94442;
-      background: #f2dede;
+      border: 1px solid #f2dede;
       border-radius: 5px;
     }
   </style>
@@ -67,38 +62,17 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
-        <a class="navbar-brand" href="#">
-          <h1 class="text-white text-capitalize">Glucoguide</h1>
-          <!-- <img src="./assets/img/brand/white.png" /> -->
+        <a class="navbar-brand" href="index.html">
+          <div class="display-3 text-white text-capitalize">Glucoguide</div>
         </a>
-        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-main">
-          <!-- Collapse header -->
-          <div class="navbar-collapse-header d-md-none">
-            <div class="row">
-              <div class="col-6 collapse-brand">
-                <a href="../index.html">
-                  <img src="./assets/img/brand/blue.png">
-                </a>
-              </div>
-              <div class="col-6 collapse-close">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
-                  <span></span>
-                  <span></span>
-                </button>
-              </div>
-            </div>
-          </div>
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="register_page.php">
-                <i class="ni ni-circle-08"></i>
-                <span class="nav-link-inner--text">Register</span>
-              </a>
-            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register_page.php">
+              <i class="ni ni-circle-08 text-white"></i>
+              <span class="lead text-white">Register</span>
+            </a>
+          </li>
           </ul>
         </div>
       </div>
@@ -110,7 +84,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-light">Login to your Glucoguide account using your user id and password.</p>
+              <p class="text-lead text-light">Login to your Glucoguide account using your user id and password</p>
             </div>
           </div>
         </div>
@@ -138,9 +112,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                     </div>
                     <input class="form-control" placeholder="User ID" type="text" name="uid">
                   </div>
-
                 </div>
-
                 <div class="form-group">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -149,20 +121,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                     <input class="form-control" placeholder="Password" type="password" name="pwd">
                   </div>
                 </div>
-                <!-- <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="remember" value="true">
-                  <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                  </label>
-                </div> -->
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4" name="login" value="login">Log In</button>
                 </div>
                 <div class="text-muted text-center mt-1"><small>
                     <?php if (!empty($loginErr)) {
-                      echo "<span class='error'>";
-                      echo $loginErr;
-                      echo "</span><br><br>";
+                      echo "<span class='error'>$loginErr</span><br><br>";
                     }
                     ?>
                   </small></div>
@@ -171,24 +135,18 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
           </div>
           <div class="row mt-3">
             <div class="col-12 text-center">
-              <a href="register_page.php" class="text-light"><small>Create new account</small></a>
+              <a href="register_page.php" class="text-light">Create new account</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <footer class="py-5">
-      <div class="container mt-3">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-xl-6">
-            <div class="text-center text-muted">
-              <span class="font-weight-bold ml-1">Glucoguide Team</span>
-            </div>
-          </div>
-        </div>
+    <div class="justify-content-center">
+      <div class="text-center text-muted p-5">
+        Glucoguide Team
       </div>
-    </footer>
+    </div>
   </div>
 </body>
 

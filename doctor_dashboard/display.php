@@ -1,26 +1,31 @@
 <?php
-// create database connectivity
 
-include ('../config.php');
+include('../config.php');
 
-// fetch data from student table..
-$sql = "SELECT n.*,l.name,l.userid FROM notification n INNER JOIN login AS l ON n.msg_from = l.userid where msg_to='" . $_SESSION['userid'] . "' order by sent_on desc";
+$id = $_SESSION['userid'];
 
-$query = $handle->query($sql);
-if ($query->num_rows  > 0) {
+$query = mysqli_query($handle, "SELECT n.*,l.name,l.userid FROM notification n INNER JOIN login 
+								AS l ON n.msg_from = l.userid WHERE msg_to='$id' AND msg_read=0 ORDER BY sent_on DESC");
+
+if (mysqli_num_rows($query) > 0) {
 	echo "<form method='POST' action='read.php'>
 	<table class='table table-hover table-striped'>
 	<tbody>";
-	while ($row = $query->fetch_assoc()) {
+	while ($row = mysqli_fetch_array($query)) {
+
 		$pid = $row['userid'];
-		$pname = $row['name'];
+		$name = $row['name'];
+		$msg = $row['message'];
+		$date = $row['sent_on'];
+
 		echo "<tr>
-				<td><a href='viewmsg.php?patient=$pid&name=$pname'>" . $row['name'] . "</a></td>
-				<td style='word-wrap: break-word; white-space: pre-wrap;'>" . $row['message'] . "</td>
-				<td style='white-space: pre-wrap;'>" . $row['sent_on'] . "</td>
+				<td><a href='viewmsg.php?patient=$pid&name=$name'>$name</a></td>
+				<td style='word-wrap: break-word; white-space: pre-wrap;'>$msg</td>
+				<td style='white-space: pre-wrap;'>$date</td>
 				<td>";
+
 		if ($row['msg_read'] == 0) {
-			 echo "<button class='btn btn-primary btn-sm' type='submit' name='mark' value=" . $row['id'] . ">
+			echo "<button class='btn btn-primary btn-sm' type='submit' name='mark' value=" . $row['id'] . ">
 			 Mark as read</button>
 			 </td></tr>";
 		}

@@ -6,26 +6,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 ?>
 <!--
-
 =========================================================
 * Argon Dashboard - v1.1.2
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/argon-dashboard
 * Copyright 2020 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
     User Profile
@@ -36,11 +31,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
   <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <!--   Scripts   -->
+  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     #status {
+      font-size: 14px;
+      width: fit-content;
+      padding: 8px;
+      color: #07a316;
+      border: 1px solid #a7ebc2;
+      border-radius: 5px;
       animation: fadeOut 2s forwards;
       animation-delay: 3s;
     }
@@ -60,27 +63,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body class="">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
-      <!-- Toggler -->
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="#">
-        <h1 class="text-blue">Glucoguide</h1>
-        <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
+        <h1 class="display-3 text-blue">Glucoguide</h1>
       </a>
-
-      <!-- Form -->
-      <!-- <form class="mt-4 mb-3 d-md-none">
-        <div class="input-group input-group-rounded input-group-merge">
-          <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <span class="fa fa-search"></span>
-            </div>
-          </div>
-        </div>
-      </form> -->
       <!-- Navigation -->
       <div class="col-sm-12">
       <ul class="navbar-nav">
@@ -113,9 +99,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <div class="main-content">
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-      <div class="container-fluid">
+      <div class="container-fluid mt-4">
         <!-- Brand -->
-        <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Profile</a>
+        <h1 class="text-white text-capitalize d-none d-lg-inline-block" href="#">Profile</h1>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -160,12 +146,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
     <?php $pid = $_SESSION['userid'];
     include('../config.php');
+
     if (mysqli_connect_error()) {
       echo "<span class='text-danger'>Unable to connect to database!</span>";
     } else {
-      $sql = "select * from patient_info where userid = '$pid'";
+      $sql = "SELECT * FROM patient_info WHERE userid = '$pid'";
       $result = mysqli_query($handle, $sql);
-      $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+      $row = mysqli_fetch_array($result,);
       $count = mysqli_num_rows($result);
 
       if ($count == 1) {
@@ -174,16 +161,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         $email = $row["email"];
         $phone = $row["phone"];
       }
-      $sql2 = "select * from casefile where patient_id = '$pid'";
+      $sql2 = "SELECT * FROM casefile WHERE patient_id = '$pid'";
       $result2 = mysqli_query($handle, $sql2);
-      $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
+      $row2 = mysqli_fetch_array($result2);
       $count2 = mysqli_num_rows($result2);
 
       if ($count2 == 1) {
         $did = $row2["doctor_id"];
-        $sql3 = "select * from doctor_info where userid = '$did'";
+        $sql3 = "SELECT * FROM doctor_info WHERE userid = '$did'";
         $result3 = mysqli_query($handle, $sql3);
-        $row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
+        $row3 = mysqli_fetch_array($result3);
         $count3 = mysqli_num_rows($result3);
 
         if ($count3 == 1) {
@@ -207,19 +194,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 														email='$email',
 														phone='$phone' where userid='$pid';");
         if ($sql) {
-          $msg = "<span class='text-success'>Profile Updated</span>";
+          $msg = "Profile Updated";
         } else {
-          $msg = "<span class='text-danger'>Error updating profile</span>";
+          $msg = "Error updating profile";
         }
       }
     } ?>
     <!-- Dashboard info here-->
-    <div class="container-fluid">
-      <div class="card shadow mt-5">
+    <div class="container-fluid mt--5">
+      <div class="card shadow">
         <h1 class="card-header ">Your Profile</h1>
         <div class="card-body">
           <div class="row">
-            <form>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
               <div class="col">
                 <h4 class="text-muted mb-4">Personal Information</h4>
                 <div class="pl-lg-4">
@@ -277,7 +264,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </div>
                     <div class="col-lg-9">
                       <?php if (!empty($msg)) {
-                        echo "<div id='status' class='text-center'>$msg</div>";
+                        echo "<div class='row justify-content-center'>
+                        <span class='text-success' id='status'>$msg</span></div>";
                       } ?>
                     </div>
                   </div>
@@ -287,22 +275,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
         </div>
       </div>
-
       <!-- Footer -->
-
-      <div class="row align-items-center justify-content-center">
-
+      <div class="row justify-content-center">
         <div class="text-center text-muted p-5">
           Glucoguide Team
         </div>
-
       </div>
-
     </div>
   </div>
-  <!--   Core   -->
-  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

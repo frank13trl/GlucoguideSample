@@ -6,29 +6,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 ?>
 <!--
-
 =========================================================
 * Argon Dashboard - v1.1.2
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/argon-dashboard
 * Copyright 2020 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php
-
-    ?>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
         Settings
@@ -42,9 +34,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="../assets/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+    <!--   Scripts   -->
+    <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
     #status {
+        font-size: 14px;
+        width: fit-content;
+        padding: 8px;
+        color: #07a316;
+        border: 1px solid #a7ebc2;
+        border-radius: 5px;
         animation: fadeOut 2s forwards;
         animation-delay: 3s;
     }
@@ -63,27 +64,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body class="">
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
         <div class="container-fluid">
-            <!-- Toggler -->
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="#">
-                <h1 class="text-blue">Glucoguide</h1>
-                <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
+                <h1 class="display-3 text-blue">Glucoguide</h1>
             </a>
-
-            <!-- Form -->
-            <!-- <form class="mt-4 mb-3 d-md-none">
-                <div class="input-group input-group-rounded input-group-merge">
-                    <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fa fa-search"></span>
-                        </div>
-                    </div>
-                </div>
-            </form> -->
             <!-- Navigation -->
             <div class="col-sm-12">
                 <ul class="navbar-nav">
@@ -116,9 +100,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="main-content">
         <!-- Navbar -->
         <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-            <div class="container-fluid">
+            <div class="container-fluid mt-6">
                 <!-- Brand -->
-                <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Default Settings</a>
+                <h1 class="text-white text-capitalize d-none d-lg-inline-block" href="#">Default Settings</h1>
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
                     <li class="nav-item dropdown">
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -155,7 +139,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </nav>
         <!-- End Navbar -->
         <!-- Header -->
-        <div class="header bg-gradient-primary pb-5 pt-5 pt-md-8">
+        <div class="header bg-gradient-primary pb-5 pt-5" style="height: 300px;">
             <div class="container-fluid">
                 <div class="header-body">
                 </div>
@@ -163,15 +147,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
 
         <!-- Dashboard info here-->
-        <div class="container-fluid">
-            <div class="row mt-5">
+        <div class="container-fluid mt--6">
+            <div class="row">
                 <div class="col">
                     <div class="card shadow">
+                        <h1 class="card-header">Your Default Settings</h1>
                         <div class="card-body" style="overflow-y:hidden;">
-                            <h1 class="card-header">Your Current Settings</h1>
                             <?php include('dsetchange.php');
-                            if (isset($msg)) {
-                                echo $msg;
+                            if (isset($_SESSION['msg'])) {
+                                echo "<div class='row justify-content-center'>
+                                        <span class='text-success' id='status'>Settings Updated</span></div>";
+                                unset($_SESSION['msg']);
                             }
                             ?>
                         </div>
@@ -180,17 +166,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
             <!-- Footer -->
             <div class="row align-items-center justify-content-center">
-
                 <div class="text-center text-muted p-5">
                     Glucoguide Team
                 </div>
-
             </div>
         </div>
     </div>
-    <!--   Core   -->
-  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

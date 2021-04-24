@@ -6,26 +6,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 ?>
 <!--
-
 =========================================================
 * Argon Dashboard - v1.1.2
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/argon-dashboard
 * Copyright 2020 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
         Messages
@@ -44,51 +39,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body class="">
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
         <div class="container-fluid">
-            <!-- Toggler -->
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
             <!-- Brand -->
             <a class="navbar-brand pt-0" href="#">
-                <h1 class="text-blue">Glucoguide</h1>
+                <h1 class="display-3 text-blue">Glucoguide</h1>
                 <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
             </a>
-
-            <!-- Form -->
-            <!-- <form class="mt-4 mb-3 d-md-none">
-                <div class="input-group input-group-rounded input-group-merge">
-                    <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fa fa-search"></span>
-                        </div>
-                    </div>
-                </div>
-            </form> -->
             <!-- Navigation -->
             <div class="col-sm-12">
-            <ul class="navbar-nav">
-                <li class="nav-item  active">
-                    <a class="nav-link  active" href="doc_dashboard.php">
-                        <i class="ni ni-tv-2 text-primary"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="doctor_settings.php">
-                        <i class="ni ni-ui-04 text-red"></i> Settings
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="userprofile.php">
-                        <i class="ni ni-single-02 text-yellow"></i> Profile
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../logout.php">
-                        <i class="ni ni-key-25 text-info"></i> Logout
-                    </a>
-                </li>
-            </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item  active">
+                        <a class="nav-link  active" href="doc_dashboard.php">
+                            <i class="ni ni-tv-2 text-primary"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="doctor_settings.php">
+                            <i class="ni ni-ui-04 text-red"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="userprofile.php">
+                            <i class="ni ni-single-02 text-yellow"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../logout.php">
+                            <i class="ni ni-key-25 text-info"></i> Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
             <!-- Divider -->
             <hr class="my-3">
@@ -97,9 +76,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="main-content">
         <!-- Navbar -->
         <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-            <div class="container-fluid">
+            <div class="container-fluid mt-4">
                 <!-- Brand -->
-                <a class="h1 mb-0 text-white text-capitalize d-none d-lg-inline-block" href="#">Previous messages</a>
+                <h1 class="text-white text-capitalize d-none d-lg-inline-block" href="#">Previous messages</h1>
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
                     <li class="nav-item dropdown">
                         <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,25 +103,23 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             </div>
         </div>
-
         <!-- Dashboard info here-->
-        <div class="container-fluid">
-            <div class="row mt-5">
+        <?php
+        $patient = $_GET['patient'];
+        $name = $_GET['name'];
+        ?>
+        <div class="container-fluid mt--5">
+            <div class="row">
                 <div class="col mb-3">
                     <div class="card shadow">
-                        <h1 class="card-header">Previous Messages from <?php echo $_GET['name'] ?></h1>
+                        <h1 class="card-header">Previous Messages from <?php echo $name ?></h1>
                         <div class="card-body" style="overflow-y:hidden;">
                             <?php
-                            // create database connectivity
 
-                            include ('../config.php');
+                            include('../config.php');
 
-                            // fetch data from student table..
-                            $sql = "SELECT * FROM notification 
-                                    where msg_to='" . $_SESSION['userid'] . "' and msg_from='".$_GET['patient']."'  order by sent_on desc";
-
-                            $query = $handle->query($sql);
-                            if ($query->num_rows  > 0) {
+                            $query = mysqli_query($handle, "SELECT * FROM notification WHERE msg_to='" . $_SESSION['userid'] . "' AND msg_from='" . $patient . "' ORDER BY sent_on DESC");
+                            if (mysqli_num_rows($query) > 0) {
                                 echo "<form method='POST' action='read.php'>
 	                                    <table class='table table-hover table-striped'>
                                             <tr>
@@ -151,8 +128,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <th>Action</th>
                                             </tr>
 	                                        <tbody>";
-                                while ($row = $query->fetch_assoc()) {
-                                    $pid = $row['msg_from'];
+                                while ($row = mysqli_fetch_assoc($query)) {
                                     echo "<tr>
 				                                <td style='white-space: pre-wrap;'>" . $row['message'] . "</td>
 				                                <td style='white-space: pre-wrap;'>" . $row['sent_on'] . "</td>
@@ -175,16 +151,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
             <!-- Footer -->
 
-            <div class="row align-items-center justify-content-center">
-
+            <div class="row justify-content-center">
                 <div class="text-center text-muted p-5">
                     Glucoguide Team
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </body>
 
