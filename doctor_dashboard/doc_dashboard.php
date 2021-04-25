@@ -156,7 +156,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
           <div class="card shadow">
             <h1 class="card-header">Your Patients</h1>
-            <div class="card-body" style="overflow-x:scroll; overflow-y:hidden;">
+            <div class="card-body" style="overflow-x:scroll; min-height:550px">
               <?php
               include('../config.php');
               if (mysqli_connect_error()) {
