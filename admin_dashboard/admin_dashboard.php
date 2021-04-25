@@ -44,7 +44,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="../index.html">
         <div class="display-3 text-blue">Glucoguide</div>
-        <!-- <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="..."> -->
       </a>
       <!-- Navigation -->
       <div class="col-sm-12">
@@ -70,7 +69,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid mt-4">
         <!-- Brand -->
-        <h1 class="text-white text-capitalize d-none d-lg-inline-block">Administrator Dashboard</h1>
+        <div class="display-3 text-white text-capitalize d-none d-lg-inline-block">Administrator Dashboard</div>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -170,7 +169,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
       </div>
       <!-- Footer -->
-      <div class="row align-items-center justify-content-center">
+      <div class="row justify-content-center">
         <div class="text-center text-muted p-5">
           Glucoguide Team
         </div>

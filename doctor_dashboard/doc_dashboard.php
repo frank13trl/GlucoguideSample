@@ -58,7 +58,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="#">
+      <a class="navbar-brand pt-0" href="../index.html">
         <h1 class="display-3 text-blue">Glucoguide</h1>
       </a>
       <!-- Navigation -->
@@ -95,9 +95,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid mt-4">
         <!-- Brand -->
-        <div class="display-3 text-white text-capitalize d-none d-lg-inline-block" href="#">
+        <div class="display-3 text-white text-capitalize d-none d-lg-inline-block">
           <?php echo "Hello, Dr." . $_SESSION['user']; ?>
-  </div>
+        </div>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -156,8 +156,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           </div>
           <div class="card shadow">
             <h1 class="card-header">Your Patients</h1>
-            <div class="card-body"  style="overflow-x:scroll; overflow-y:hidden;">
-            <?php
+            <div class="card-body" style="overflow-x:scroll; overflow-y:hidden;">
+              <?php
               include('../config.php');
               if (mysqli_connect_error()) {
                 echo "<span class='text-danger'>Unable to connect to database!</span>";
@@ -194,7 +194,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 }
                 echo "</tbody></table>";
               }
-            ?>
+              ?>
             </div>
           </div>
         </div>

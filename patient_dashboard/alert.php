@@ -72,7 +72,6 @@ if (mysqli_connect_error()) {
       </button>
   </div>
   <?php
-  echo $flag;
   if ($flag == 1) {
     echo "<script>document.getElementById('halert').style.display = 'block';</script>";
   }

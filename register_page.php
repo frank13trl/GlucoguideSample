@@ -228,9 +228,9 @@
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit" name="reg_user" class="btn btn-primary">Create Account</button>
+                <button type="submit" name="reg_user" class="btn btn-primary my-4">Create Account</button>
               </div>
-              <div class="text-muted text-center mt-3"><small>
+              <div class="text-muted text-center mt-1"><small>
                   <?php if (!empty($message1)) {
                     echo "<span class='success'>$message1</span>";
                   } if (!empty($message2)) {

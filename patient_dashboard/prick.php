@@ -16,7 +16,7 @@ if (isset($_POST['prick'])) {
 
 	if ($handle->query($sql) === TRUE) {
 		$msg = "<div class='row justify-content-center'>
-					<span class='push text-success' id='status'>Your readings are updated successfully</span></div>";
+					<span class='push text-success' id='status'>Your readings were updated successfully</span></div>";
 		$_SESSION["msg"] = $msg;
 	} else {
 		echo "Error: $sql<br>" . $handle->error;

@@ -68,11 +68,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   </style>
 </head>
 
-<body class="">
+<body>
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="#">
+      <a class="navbar-brand pt-0" href="../index.html">
         <h1 class="display-3 text-blue">Glucoguide</h1>
       </a>
       <!-- Navigation -->
@@ -109,7 +109,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid mt-4">
         <!-- Brand -->
-        <h1 class="text-white d-none d-lg-inline-block" href="#">Patient Report</h1>
+        <div class="display-3 text-white d-none d-lg-inline-block">Patient Report</div>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -233,7 +233,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               <div class="card-body" style="overflow-y:hidden;">
                 <?php
                 include('psetchange.php');
-                if (isset($_SESSION['msg'])) {
+                if (isset($_SESSION['msg']) && $_SESSION['msg'] == "Settings Updated") {
                   echo "<div class='row justify-content-center'>
                           <span class='text-success' id='status'>Settings Updated</span></div>";
                   unset($_SESSION['msg']);

@@ -17,10 +17,10 @@ if (isset($_POST['send'])) {
         } else {
 
             $result = mysqli_query($handle, "SELECT * FROM casefile WHERE patient_id = '" . $_SESSION['userid'] . "';");
-            $row = mysqli_fetch_assoc($result2);
+            $row = mysqli_fetch_assoc($result);
             $did = $row["doctor_id"];
             
-            $query = mysqli_query($handle, "Insert into notification values (default, '" . $_SESSION['userid'] . "','" . $did . "','" . $_POST["msg"] . "', default, default);");
+            $query = mysqli_query($handle, "Insert into notification values (default, '" . $_SESSION['userid'] . "','$did','" . $_POST["msg"] . "', default, default);");
             if ($query) {
                 echo "<script>
                         function goBack() {

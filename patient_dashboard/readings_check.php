@@ -46,7 +46,7 @@ if (count($_POST)) {
 
 		if ($handle->query($sql) === TRUE) {
 			echo "<div class='row justify-content-center'>
-					<span class='text-success' id='status'>Your readings are updated successfully</span></div>";
+					<span class='text-success' id='status'>Your readings were updated successfully</span></div>";
 			echo "<script>document.getElementById('halert').style.display = 'none';</script>";
 			echo "<script>document.getElementById('lalert').style.display = 'none';</script>";
 			echo "<script>document.getElementById('warn').style.display = 'none';</script>";
