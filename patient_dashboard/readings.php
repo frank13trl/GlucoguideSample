@@ -32,6 +32,7 @@ if ($count == 1) {
             if (x == 0) {
                 document.getElementById("addnew").style.display = "none";
                 document.getElementById("submit").style.display = "inline";
+                document.getElementById("submit").disabled = false;
             }
         }
     </script>
@@ -71,7 +72,7 @@ if ($count == 1) {
         <p><br>
             <input type="reset" class='btn btn-warning'>
             <input type="button" class='btn btn-primary' id="addnew" onClick="javascript:add_feed()" value='Next'>
-            <input type="submit" class='btn btn-success' id="submit" style="display:none;">
+            <input type="submit" class='btn btn-success' id="submit" style="display:none;" disabled>
         </p>
     </form>
 
@@ -88,6 +89,13 @@ if ($count == 1) {
             <input type="text" name="values[]" class='form-control' required>
         </div>
     </div>
+    <script>
+        if (x == 0) {
+            document.getElementById("addnew").style.display = "none";
+            document.getElementById("submit").style.display = "inline";
+            document.getElementById("submit").disabled = false;
+        }
+    </script>
 </body>
 
 </html>
